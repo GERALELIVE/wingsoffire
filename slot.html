@@ -36,13 +36,14 @@
         .slot-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
         .slot-title { 
-            font-size: clamp(1.2rem, 4vw, 1.6rem); 
+            font-size: clamp(1.1rem, 3.8vw, 1.6rem); 
             color: #ffd700; 
             text-transform: uppercase; 
-            letter-spacing: clamp(2px, 0.5vw, 3px); 
+            letter-spacing: clamp(1.5px, 0.4vw, 3px); 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
             margin-bottom: clamp(10px, 2vh, 15px);
-            margin-top: clamp(25px, 5vh, 45px);
+            margin-top: clamp(35px, 6vh, 45px);
+            padding: 0 60px;
         }
 
         .slot-reels { 
@@ -482,37 +483,84 @@
         @media (max-width: 480px) {
             .slot-card {
                 width: 98%;
-                padding: 15px 10px;
-                min-height: 550px;
+                padding: 12px 8px;
+                min-height: 520px;
+            }
+            
+            .slot-title {
+                font-size: 1.05rem;
+                margin-top: 32px;
+                margin-bottom: 8px;
+                padding: 0 50px;
+                letter-spacing: 1px;
             }
             
             .slot-reels {
-                gap: 10px;
+                gap: 8px;
+                margin-bottom: 12px;
             }
             
             .reel {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
+                width: 58px;
+                height: 58px;
+                font-size: 1.9rem;
+            }
+            
+            .slot-result {
+                font-size: 0.9rem;
+                min-height: 35px;
+                margin-bottom: 12px;
+            }
+            
+            .spin-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .auto-roll-container {
+                margin-top: 10px;
+                gap: 8px;
+            }
+            
+            .auto-btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
             }
             
             .points-label {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
+            }
+            
+            .points-value {
+                font-size: 1.15rem;
             }
         }
         
         @media (max-height: 700px) {
             .slot-card {
-                padding: 15px 20px;
+                padding: 12px 15px;
                 min-height: auto;
+                max-height: 98vh;
             }
             
             .slot-title {
-                margin-top: 20px;
-                margin-bottom: 10px;
+                margin-top: 30px;
+                margin-bottom: 8px;
+                font-size: 1.15rem;
             }
             
             .slot-reels {
+                margin-bottom: 10px;
+                gap: 12px;
+            }
+            
+            .reel {
+                width: 65px;
+                height: 65px;
+            }
+            
+            .slot-result {
+                min-height: 35px;
                 margin-bottom: 10px;
             }
         }
