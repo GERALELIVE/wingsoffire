@@ -2,29 +2,25 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alliance Slot - Wings of Fire</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* === SISTEMA BASE FIJO === */
         body { 
             margin: 0; height: 100vh; 
             background: radial-gradient(circle at center, #3a1c52 0%, #1a0b2e 60%, #05020a 100%); 
             display: flex; justify-content: center; align-items: center; 
-            font-family: 'Cinzel', serif; overflow: hidden; color: #d4af37;
-            padding: 10px;
+            font-family: 'Cinzel', serif; overflow: hidden; color: #d4af37; 
         }
 
-        /* Contenedor principal - FIJO BASE */
         .slot-card { 
             position: relative; 
-            width: 450px; 
-            max-width: calc(100vw - 20px);
-            height: auto;
-            min-height: 550px;
-            max-height: calc(100vh - 20px);
-            padding: 20px;
+            width: 90%; 
+            max-width: 450px; 
+            height: 700px;
+            max-height: 90vh;
+            padding: 40px 30px;
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -32,37 +28,31 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            transition: transform 0.3s ease;
         }
 
         .slot-card::before, .slot-card::after { content: ''; position: absolute; width: 15px; height: 15px; border: 3px solid #d4af37; pointer-events: none; z-index: 20; }
         .slot-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; } 
         .slot-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
-        /* Título - VALOR FIJO */
         .slot-title { 
-            font-size: 1.2rem; 
-            color: #ffd700; 
-            text-transform: uppercase; 
-            letter-spacing: 1.5px; 
+            font-size: 1.6rem; color: #ffd700; 
+            text-transform: uppercase; letter-spacing: 3px; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
-            margin-bottom: 12px;
-            margin-top: 40px;
-            padding: 0;
+            margin-bottom: 15px;
+            margin-top: 45px;
         }
 
         .slot-reels { 
-            display: flex; justify-content: center; gap: 10px; 
-            margin-bottom: 12px; 
+            display: flex; justify-content: center; gap: 15px; 
+            margin-bottom: 20px; 
         }
 
         .reel { 
-            width: 62px; 
-            height: 62px; 
+            width: 90px; height: 90px; 
             background: rgba(0, 0, 0, 0.5); 
             border: 3px solid #d4af37; border-radius: 15px; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 2rem; 
+            font-size: 3rem; 
             box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 5px 15px rgba(0,0,0,0.5); 
             transition: all 0.3s; 
         }
@@ -79,23 +69,20 @@
         .slot-result { 
             color: #ffd700; font-size: 1rem; 
             text-align: center; min-height: 40px; 
-            margin-bottom: 12px; font-weight: bold; 
+            margin-bottom: 15px; font-weight: bold; 
             line-height: 1.4; 
         }
 
         .spin-btn { 
             background: linear-gradient(135deg, #d4af37 0%, #8a6e2f 100%); 
             color: #1a0b2e; border: none; 
-            padding: 12px 30px; 
-            border-radius: 12px; 
+            padding: 15px 40px; border-radius: 12px; 
             cursor: pointer; font-family: 'Cinzel', serif; 
-            font-size: 0.9rem; 
-            font-weight: bold; 
+            font-size: 1.2rem; font-weight: bold; 
             text-transform: uppercase; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
             transition: all 0.2s; 
-            width: 100%;
-            min-height: 42px;
+            width: 100%; 
         }
 
         .spin-btn:hover { 
@@ -116,7 +103,7 @@
             display: flex;
             gap: 10px;
             width: 100%;
-            margin-top: 12px;
+            margin-top: 15px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
@@ -135,7 +122,7 @@
             border-radius: 12px;
             cursor: pointer;
             font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
             text-transform: uppercase;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -219,21 +206,21 @@
             background: rgba(10, 5, 15, 0.6);
             border: 2px solid #8a6e2f;
             border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 12px;
+            padding: 12px;
+            margin-bottom: 15px;
             text-align: center;
         }
         
         .points-label {
             color: #d4af37;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             letter-spacing: 2px;
             margin-bottom: 5px;
         }
         
         .points-value {
             color: #ffd700;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
@@ -325,38 +312,33 @@
         }
         
         /* Level Display */
-        /* Top Controls - VALORES FIJOS */
         .level-display {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 20px;
+            left: 20px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 0.8rem;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
             color: #ffd700;
             font-weight: bold;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             z-index: 10;
-            max-width: 35%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         
         /* Back Button */
         .back-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 8px;
-            padding: 7px 12px;
+            padding: 8px 15px;
             cursor: pointer;
             color: #d4af37;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: bold;
             transition: all 0.2s;
             z-index: 10;
@@ -374,11 +356,11 @@
         /* Info Button */
         .info-btn {
             position: absolute;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 32px;
-            height: 32px;
+            width: 35px;
+            height: 35px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 50%;
@@ -387,7 +369,7 @@
             justify-content: center;
             cursor: pointer;
             color: #ffd700;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
             font-family: 'Cinzel', serif;
             font-style: normal;
@@ -489,56 +471,13 @@
         .close-modal-btn:hover {
             transform: scale(1.05);
         }
-        
-        /* === MEDIA QUERIES - SISTEMA DE ESCALADO TRANSFORM === */
-        
-        /* Pantallas pequeñas - reducir con transform */
-        @media (max-width: 400px) {
-            .slot-card {
-                transform: scale(0.92);
-            }
-        }
-        
-        @media (max-width: 360px) {
-            .slot-card {
-                transform: scale(0.85);
-            }
-        }
-        
-        /* Pantallas cortas en altura */
-        @media (max-height: 650px) {
-            .slot-card {
-                min-height: 500px;
-                transform: scale(0.9);
-            }
-        }
-        
-        @media (max-height: 550px) {
-            .slot-card {
-                min-height: 450px;
-                transform: scale(0.8);
-            }
-        }
-        
-        /* Tablets y escritorio - escalar hacia arriba */
-        @media (min-width: 768px) {
-            .slot-card {
-                transform: scale(1.05);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .slot-card {
-                transform: scale(1.1);
-            }
-        }
     </style>
 </head>
 <body>
     <!-- Info Modal -->
     <div id="infoModal">
         <div class="info-modal-content">
-            <div class="info-modal-title">� GAME RULES 📋</div>
+            <div class="info-modal-title">📊 GAME INFO �</div>
             
             <div class="legend" id="levelInfoContent">
                 <!-- Level-specific info will be injected here -->
@@ -560,7 +499,7 @@
                 <div class="legend-title">AUTO-ROLL FEATURE</div>
                 <div class="legend-item">⚡ Unlocks after 50 spins per level</div>
                 <div class="legend-item">▶️ Press to start continuous spins</div>
-                <div class="legend-item">⏸️ Press again to stop anytime</div>
+                <div class="legend-item">❌ Press again to stop anytime</div>
                 <div class="legend-item">🔄 Resets when leveling up</div>
             </div>
             
@@ -590,9 +529,9 @@
         <div class="level-display" id="levelDisplay">LEVEL 1</div>
         <a href="index.html" class="back-btn" id="backBtn">
             <span>←</span>
-            <span>EXIT</span>
+            <span>BACK</span>
         </a>
-        <div class="info-btn" onclick="openInfoModal()" title="Rules">❔</div>
+        <div class="info-btn" onclick="openInfoModal()" title="Game Info">❔</div>
         <div class="slot-title">🎰 ALLIANCE SLOT 🎰</div>
         
         <div class="points-container">
@@ -691,21 +630,6 @@
                 const container = document.getElementById('autoRollContainer');
                 container.classList.add('unlocked');
             }
-            
-            // Handle browser back button for modals
-            window.addEventListener('popstate', function(event) {
-                const infoModal = document.getElementById('infoModal');
-                const resetModal = document.getElementById('resetModal');
-                
-                // Close info modal if open
-                if (infoModal.classList.contains('show')) {
-                    infoModal.classList.remove('show');
-                }
-                // Close reset modal if open
-                if (resetModal && resetModal.style.display === 'flex') {
-                    resetModal.style.display = 'none';
-                }
-            });
         });
         
         function updateLevelDisplay() {
@@ -802,8 +726,6 @@
         function openInfoModal() {
             updateModalLevelInfo();
             document.getElementById('infoModal').classList.add('show');
-            // Add history entry to handle back button
-            history.pushState({modal: 'info'}, '', '#info');
         }
         
         function updateModalLevelInfo() {
@@ -859,10 +781,6 @@
         
         function closeInfoModal() {
             document.getElementById('infoModal').classList.remove('show');
-            // Remove hash from URL if present
-            if (window.location.hash === '#info') {
-                history.back();
-            }
         }
         
         function levelUp() {
