@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sorteo - WINGS OF FIRE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* === ESTILOS VISUALES === */
+        body { 
+            margin: 0; height: 100vh; 
+            background: radial-gradient(circle at center, #3a1c52 0%, #1a0b2e 60%, #05020a 100%); 
+            display: flex; justify-content: center; align-items: center; 
+            font-family: 'Cinzel', serif; overflow: hidden; user-select: none; color: #d4af37; 
+            overscroll-behavior: none; 
+        }
+
+        /* Tarjeta principal */
+        .card { 
+            position: relative; width: 90%; max-width: 500px; height: min(520px, 85vh); 
+            padding: 20px; 
+            background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
+            border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
+            box-sizing: border-box; overflow: hidden; 
+        }
+
+        /* Esquinas decorativas */
+        .card::before, .card::after { content: ''; position: absolute; width: 15px; height: 15px; border: 3px solid #d4af37; pointer-events: none; z-index: 20; }
+        .card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; } 
+        .card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+        .card-corners-extra { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
+        .card-corners-extra::before, .card-corners-extra::after { content: ''; position: absolute; width: 15px; height: 15px; border: 3px solid #d4af37; }
+        .card-corners-extra::before { top: 8px; right: 8px; border-left: none; border-bottom: none; } 
+        .card-corners-extra::after { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+
+        /* Textos */
+        h1 { font-size: clamp(1.2rem, 5vw, 1.8rem); margin: 0; color: #ffd700; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+        .tag { color: #ffd700; font-size: clamp(0.7rem, 3vw, 1rem); letter-spacing: 3px; font-weight: bold; margin-top: 5px; opacity: 0.9; }
+        .setup-title { font-size: clamp(1.2rem, 5vw, 1.6rem); margin-bottom: 10px; color: #ffd700; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); letter-spacing: 2px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; width: 80%; }
+
+        /* Input */
+        textarea { width: 100%; flex-grow: 1; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; padding: 15px; border-radius: 12px; resize: none; outline: none; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); margin-bottom: 15px; box-sizing: border-box; text-align: left; }
+        textarea::placeholder { color: #888; font-style: italic; font-family: 'Cinzel', serif; text-align: center; padding-top: 25%; } 
+        textarea:focus::placeholder { padding-top: 0; opacity: 0.5; }
+
+        /* Header */
+        .header-container { display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 5px; flex-shrink: 0; } 
+        .header-text { display: flex; flex-direction: column; align-items: center; margin: 0 10px; }
+        .wing-svg { width: clamp(40px, 12vw, 70px); height: clamp(40px, 12vw, 70px); filter: drop-shadow(0 0 5px #ff4500); } 
+        .wing-path { fill: url(#fireGradient); }
+        .wing-left { transform-origin: right center; animation: flapLeft 4s ease-in-out infinite; } 
+        .wing-right { transform-origin: left center; animation: flapRight 4s ease-in-out infinite; }
+        @keyframes flapLeft { 0%, 100% { transform: rotate(5deg) scale(1); } 50% { transform: rotate(12deg) scale(1.05); } } 
+        @keyframes flapRight { 0%, 100% { transform: rotate(-5deg) scale(1); } 50% { transform: rotate(-12deg) scale(1.05); } }
+
+        /* Slot Window */
+        .slot-window { width: 100%; overflow: hidden; position: relative; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; border-radius: 12px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 30px rgba(0,0,0,0.9); flex-grow: 1; }
+        .candidate-row { font-family: 'Playfair Display', serif; display: flex; justify-content: center; align-items: center; position: absolute; left: 0; right: 0; width: 100%; height: 60px; white-space: nowrap; transition: all 0.1s linear; }
+        
+        .row-top { top: 20%; transform: translateY(-50%) scale(0.9); font-size: 1rem; opacity: 0.5; color: #d4af37; filter: blur(1px); } 
+        .row-bot { top: 80%; transform: translateY(-50%) scale(0.9); font-size: 1rem; opacity: 0.5; color: #d4af37; filter: blur(1px); }
+        .row-mid { top: 50%; transform: translateY(-50%); font-size: 1.8rem; opacity: 1; color: #fff; font-weight: bold; z-index: 10; }
+        
+        .row-winner { top: 50%; transform: translateY(-50%); font-size: 3.0rem; opacity: 1; font-weight: 900; z-index: 20; color: #ffe0e0; text-shadow: 0 0 5px #fff, 0 0 10px #ff4da6, 0 0 20px #ff4500; animation: winnerPulse 2s infinite alternate; width: auto; max-width: 95%; }
+        .row-winner::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 110%; height: 120%; background: radial-gradient(ellipse at center, rgba(255, 69, 0, 0.4) 0%, rgba(255, 0, 0, 0.1) 60%, transparent 100%); filter: blur(15px); z-index: -1; opacity: 0.8; animation: flameFlicker 0.1s infinite alternate; }
+        
+        @keyframes winnerPulse { 0% { transform: translateY(-50%) scale(1.1); } 100% { transform: translateY(-50%) scale(1.15); } } 
+        @keyframes flameFlicker { 0% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0.9; transform: translate(-50%, -51%) scale(1.02); } }
+        
+        .hidden { opacity: 0 !important; }
+        
+        /* Botones */
+        .controls-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; height: 50px; margin-top: 5px; }
+        .btn { background: linear-gradient(180deg, #d4af37 0%, #96732b 100%); border: 2px solid #fbeea9; height: 45px; padding: 0 20px; font-family: 'Cinzel', serif; font-size: clamp(0.9rem, 4vw, 1.1rem); font-weight: bold; color: #2a1a05; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.6); transition: all 0.2s; outline: none; text-transform: uppercase; letter-spacing: 1px; flex-grow: 1; max-width: 280px; white-space: nowrap; display: flex; justify-content: center; align-items: center; }
+        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); } .btn:active { transform: translateY(1px); } 
+        .btn:disabled { background: #444; color: #888; border-color: #666; cursor: not-allowed; transform: none; }
+        
+        .btn-back { background: rgba(0,0,0,0.4); border: 2px solid #d4af37; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: all 0.2s; flex-shrink: 0; }
+        .btn-back:hover { background: rgba(212, 175, 55, 0.2); transform: scale(1.05); } .btn-back:active { transform: scale(0.95); } 
+        .btn-back.disabled { opacity: 0.3; pointer-events: none; filter: grayscale(100%); }
+        
+        .arrow-icon { width: 20px; height: 20px; fill: #d4af37; }
+        
+        /* Transición de Fuego */
+        #fireOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(50, 0, 0, 1) 0%, rgba(255, 50, 0, 0.8) 40%, rgba(255, 150, 0, 0.4) 70%, transparent 100%); z-index: 999; transform: translateY(100%); pointer-events: none; mix-blend-mode: screen; }
+        .animate-fire { animation: fireRise 0.9s ease-in-out forwards; } 
+        @keyframes fireRise { 0% { transform: translateY(110%); opacity: 0; } 30% { opacity: 1; } 50% { transform: translateY(0%); } 100% { transform: translateY(-110%); opacity: 0; } }
+        
+        #lotteryCard { display: none; } #setupScreen { display: flex; }
+        
+        @media (max-height: 600px) { .card { padding: 15px; } .slot-window { height: 140px; } .wing-svg { width: 40px; height: 40px; } h1 { font-size: 1.2rem; } .setup-title { font-size: 1.2rem; margin-bottom: 5px; } textarea { margin-bottom: 10px; } }
+    </style>
+</head>
+<body>
+    <svg style="position: absolute; width: 0; height: 0;"><defs><linearGradient id="fireGradient" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="10%" style="stop-color:#ff0000;stop-opacity:1" /><stop offset="60%" style="stop-color:#ff4500;stop-opacity:1" /><stop offset="100%" style="stop-color:#ffcc00;stop-opacity:1" /></linearGradient></defs></svg>
+    
+    <div id="setupScreen" class="card">
+        <div id="fireOverlay"></div><div class="card-corners-extra"></div>
+        <div class="setup-title">⚜ ROLL MEMBERS ⚜</div>
+        <textarea id="inputNames" placeholder="Paste your list here..."></textarea>
+        <div class="controls-container"><button class="btn" onclick="animarYCambiar('forward')">START</button></div>
+    </div>
+    <div id="lotteryCard" class="card">
+        <div class="card-corners-extra"></div>
+        <div class="header-container">
+            <svg class="wing-svg wing-left" viewBox="0 0 480 450"><defs><linearGradient id="dragonFire" x1="10%" y1="90%" x2="90%" y2="10%"><stop offset="0%" stop-color="#b30000" /><stop offset="40%" stop-color="#e63e23" /><stop offset="70%" stop-color="#f78c1e" /><stop offset="100%" stop-color="#f9ca24" /></linearGradient><linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.7"/><stop offset="100%" stop-color="#f9ca24" stop-opacity="0"/></linearGradient></defs><g transform="translate(40, 50) scale(0.85) scale(-1, 1) translate(-480, 0)"><path fill="url(#dragonFire)" stroke="#f7d317" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" d="M 100 420 C 130 250, 250 120, 480 20 L 440 140 Q 360 190, 300 250 L 380 290 Q 300 330, 240 360 L 300 400 Q 220 400, 150 420 Z"/><path fill="url(#shine)" d="M 110 410 C 145 255, 260 135, 470 35 L 475 45 C 280 160, 170 280, 140 415 Z" opacity="0.8" style="mix-blend-mode: screen;"/><path fill="none" stroke="#f9ca24" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round" d="M 270 160 Q 310 240, 380 290"/><path fill="none" stroke="#f9ca24" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round" d="M 230 210 Q 250 310, 300 400"/></g></svg>
+            <div class="header-text"><h1>WINGS OF FIRE</h1><div class="tag">⚜ (WIN) ⚜</div></div>
+            <svg class="wing-svg wing-right" viewBox="0 0 480 450"><defs><linearGradient id="dragonFire2" x1="10%" y1="90%" x2="90%" y2="10%"><stop offset="0%" stop-color="#b30000" /><stop offset="40%" stop-color="#e63e23" /><stop offset="70%" stop-color="#f78c1e" /><stop offset="100%" stop-color="#f9ca24" /></linearGradient><linearGradient id="shine2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.7"/><stop offset="100%" stop-color="#f9ca24" stop-opacity="0"/></linearGradient></defs><g transform="translate(40, 50) scale(0.85)"><path fill="url(#dragonFire2)" stroke="#f7d317" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" d="M 100 420 C 130 250, 250 120, 480 20 L 440 140 Q 360 190, 300 250 L 380 290 Q 300 330, 240 360 L 300 400 Q 220 400, 150 420 Z"/><path fill="url(#shine2)" d="M 110 410 C 145 255, 260 135, 470 35 L 475 45 C 280 160, 170 280, 140 415 Z" opacity="0.8" style="mix-blend-mode: screen;"/><path fill="none" stroke="#f9ca24" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round" d="M 270 160 Q 310 240, 380 290"/><path fill="none" stroke="#f9ca24" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round" d="M 230 210 Q 250 310, 300 400"/></g></svg>
+        </div>
+        <div class="slot-window"><div id="slot-top" class="candidate-row row-top"></div><div id="slot-mid" class="candidate-row row-winner">✨ ???</div><div id="slot-bot" class="candidate-row row-bot"></div></div>
+        <div class="controls-container">
+            <div id="btnBack" class="btn-back" onclick="animarYCambiar('back')" title="Edit List"><svg class="arrow-icon" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg></div>
+            <button id="btnRoll" class="btn" onclick="iniciarRodillo()">SUMMON AGAIN</button>
+        </div>
+    </div>
+    <script>
+        let lista = [];
+        const fantasyEmojis = ["⚔️", "🛡️", "🔮", "👑", "🐉", "⚜️", "🏰", "📜", "🍷", "💍", "🦄", "🔥", "🦅", "🗡️", "🏹", "🪓", "🩸", "⛓️", "🗝️", "🌑", "🧙‍♂️", "🧙‍♀️", "🧚", "🧞", "🧝", "🧛", "🧟", "🧟‍♀️", "🧜", "👺", "👹", "🐺", "🦁", "🐎", "🦇", "🦉", "🕷️", "🦂", "🐍", "🐊", "☠️", "💀", "⚰️", "🏺", "🧿", "🕯️", "☄️", "⚡", "🌟", "🌙"];
+        
+        const setupScreen = document.getElementById('setupScreen'), lotteryCard = document.getElementById('lotteryCard'), fireOverlay = document.getElementById('fireOverlay'), inputNames = document.getElementById('inputNames'), slotTop = document.getElementById('slot-top'), slotMid = document.getElementById('slot-mid'), slotBot = document.getElementById('slot-bot'), btn = document.getElementById('btnRoll'), btnBack = document.getElementById('btnBack');
+        let isRolling = false;
+
+        // === MOTOR DE AUDIO (Web Audio API) ===
+        // Esto crea el sistema de audio. Empieza "suspendido" por reglas del navegador.
+        let audioCtx = null;
+        let fireBuffer = null;
+
+        // Funcion para inicializar el audio al primer clic del usuario
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+                prepareFireBuffer(); // Preparar el sonido de fuego
+            }
+            // Importante: Reanudar si estaba suspendido
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+        }
+
+        // Generar ruido blanco en memoria para el efecto de fuego
+        function prepareFireBuffer() {
+            if (!audioCtx) return;
+            const bufferSize = audioCtx.sampleRate * 1.5; // Duracion 1.5s
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+            fireBuffer = buffer;
+        }
+
+        // Desbloqueador global para PC: Detecta cualquier clic en la pagina para encender el audio
+        document.addEventListener('click', () => { initAudio(); }, { once: true });
+
+        // Sonido 1: Tragaperras (Onda Cuadrada Metalica)
+        function playSlotSound() {
+            if (!audioCtx) return;
+            const t = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.type = 'square'; // Sonido tipo 8-bit/mecanico
+            osc.frequency.setValueAtTime(800, t); 
+            osc.frequency.exponentialRampToValueAtTime(100, t + 0.1); // Bajada rapida de tono
+            
+            gainNode.gain.setValueAtTime(0.15, t); // Volumen moderado
+            gainNode.gain.exponentialRampToValueAtTime(0.01, t + 0.1); 
+            
+            osc.start(t);
+            osc.stop(t + 0.1);
+        }
+
+        // Sonido 2: Fuego (Ruido filtrado)
+        function playFireSound() {
+            if (!audioCtx || !fireBuffer) return;
+            const t = audioCtx.currentTime;
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = fireBuffer;
+            
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass'; // Filtro de paso bajo para sonar grave
+            filter.frequency.setValueAtTime(100, t);
+            filter.frequency.linearRampToValueAtTime(800, t + 0.4); // Sube intensidad
+            filter.frequency.linearRampToValueAtTime(100, t + 1.2); 
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0, t);
+            gain.gain.linearRampToValueAtTime(0.8, t + 0.3); 
+            gain.gain.linearRampToValueAtTime(0, t + 1.2);   
+
+            noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); noise.start(t);
+        }
+
+        // Sonido 3: Ganador (Arpegio Magico)
+        function playWinnerSound() {
+            if (!audioCtx) return;
+            const t = audioCtx.currentTime;
+            // Notas musicales para la victoria
+            const freqs = [523.25, 659.25, 783.99, 1046.50]; 
+            freqs.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine'; // Onda pura suave
+                osc.frequency.value = freq;
+                const start = t + (i * 0.08); 
+                
+                gain.gain.setValueAtTime(0, start);
+                gain.gain.linearRampToValueAtTime(0.3, start + 0.05); 
+                gain.gain.exponentialRampToValueAtTime(0.001, start + 1.5); 
+                
+                osc.connect(gain); gain.connect(audioCtx.destination); osc.start(start); osc.stop(start + 2.0);
+            });
+        }
+
+        // --- LOGICA DE NAVEGACION ---
+        function animarYCambiar(d) { 
+            if (isRolling) return; // Bloqueo si esta girando
+
+            // Validacion de campo vacio
+            if (d === 'forward' && !inputNames.value.trim()) { 
+                inputNames.style.borderColor = "#ff0000"; 
+                setTimeout(() => inputNames.style.borderColor = "#8a6e2f", 500); 
+                return; 
+            } 
+            
+            playFireSound(); // Reproducir sonido fuego
+            
+            // Animacion visual
+            const cc = (d === 'forward') ? setupScreen : lotteryCard; 
+            cc.appendChild(fireOverlay); 
+            fireOverlay.classList.remove('animate-fire'); 
+            void fireOverlay.offsetWidth; 
+            fireOverlay.classList.add('animate-fire'); 
+            
+            setTimeout(() => { 
+                if (d === 'forward') ejecutarStart(); 
+                else ejecutarBack(); 
+                const nc = (d === 'forward') ? lotteryCard : setupScreen; 
+                nc.appendChild(fireOverlay); 
+            }, 450); 
+        }
+
+        // Preparar lista de nombres
+        function ejecutarStart() { 
+            const l = inputNames.value.trim().split('\n').map(x => x.trim()).filter(x => x.length > 0); 
+            let ed = [...fantasyEmojis]; 
+            // Asignar emojis sin repetir hasta agotar mazo
+            const getEm = () => { if (ed.length === 0) ed = [...fantasyEmojis]; return ed.splice(Math.floor(Math.random() * ed.length), 1)[0]; }; 
+            lista = l.map(n => `${getEm()} ${n}`); 
+            resetLotteryScreen(); 
+            setupScreen.style.display = 'none'; 
+            lotteryCard.style.display = 'flex'; 
+        }
+
+        function ejecutarBack() { lotteryCard.style.display = 'none'; setupScreen.style.display = 'flex'; }
+        
+        function resetLotteryScreen() { 
+            slotTop.innerHTML = ""; slotBot.innerHTML = ""; slotMid.innerHTML = "✨ ???"; 
+            slotMid.classList.remove('row-mid'); slotMid.classList.add('row-winner'); 
+            slotMid.style.fontSize = ""; 
+            btn.innerText = "SUMMON"; btn.disabled = false; 
+        }
+        function getHtml(t) { return t; }
+        
+        // --- LOGICA DE GIRO (RODILLO) ---
+        function iniciarRodillo() { 
+            if (isRolling) return; 
+            isRolling = true; 
+            btn.disabled = true; 
+            btnBack.classList.add('disabled'); // Desactivar boton atras
+
+            btn.innerText = "ROLLING..."; 
+            
+            slotTop.classList.remove('hidden'); 
+            slotBot.classList.remove('hidden'); 
+            slotMid.classList.remove('row-winner'); 
+            slotMid.classList.add('row-mid'); 
+            slotMid.style.fontSize = ""; 
+            
+            let c = 0, v = 50, vt = 50, i = Math.floor(Math.random() * lista.length); 
+            
+            function paso() { 
+                let p = (i - 1 + lista.length) % lista.length, n = (i + 1) % lista.length; 
+                slotTop.innerHTML = getHtml(lista[p]); 
+                slotMid.innerHTML = getHtml(lista[i]); 
+                slotBot.innerHTML = getHtml(lista[n]); 
+                
+                playSlotSound(); // Sonido mecanico por cada paso
+
+                i = (i + 1) % lista.length; 
+                c++; 
+                if (c < vt) { 
+                    if (c > vt - 15) v *= 1.15; // Desaceleracion al final
+                    setTimeout(paso, v); 
+                } else finalizarSorteo(); 
+            } 
+            paso(); 
+        }
+        
+        function finalizarSorteo() { 
+            slotTop.classList.add('hidden'); 
+            slotBot.classList.add('hidden'); 
+            slotMid.classList.remove('row-mid'); 
+            slotMid.classList.add('row-winner'); 
+            
+            playWinnerSound(); // Sonido magico final
+            
+            setTimeout(() => ajustarTamanoTexto(slotMid), 10); 
+            
+            btn.disabled = false; 
+            btn.innerText = "SUMMON AGAIN"; 
+            isRolling = false; 
+            btnBack.classList.remove('disabled'); // Reactivar boton atras
+        }
+
+        // Ajuste de texto para que quepa (sin ser menor al rodillo)
+        function ajustarTamanoTexto(el) { 
+            let fs = 3.0; // Empezar en tamaño gigante
+            el.style.fontSize = fs + "rem"; 
+            const cw = el.parentElement.clientWidth, mw = cw * 0.95; 
+            // Reducir solo si desborda, limite 1.8rem
+            while (el.scrollWidth > mw && fs > 1.8) { 
+                fs -= 0.1; 
+                el.style.fontSize = fs + "rem"; 
+            } 
+        }
+    </script>
+</body>
+</html>
