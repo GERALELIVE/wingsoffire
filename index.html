@@ -18,8 +18,12 @@
 
         /* Tarjeta principal */
         .card { 
-            position: relative; width: 90%; max-width: 500px; height: min(520px, 85vh); 
-            padding: 20px; 
+            position: relative; 
+            width: 90%; 
+            max-width: 450px; 
+            height: 700px;
+            max-height: 90vh;
+            padding: 40px 30px; 
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -92,10 +96,183 @@
         
         #lotteryCard { display: none; } #setupScreen { display: flex; }
         
+        /* Slot Access Button */
+        .slot-access-btn { background: none; border: 1px solid #ffd700; color: #ffd700; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; display: none; font-family: 'Cinzel', serif; transition: all 0.2s; text-decoration: none; align-items: center; justify-content: center; }
+        .slot-access-btn.show { display: flex; }
+        .slot-access-btn:hover { background: rgba(255, 215, 0, 0.1); transform: scale(1.05); }
+        
+        /* Admin Edit Button */
+        .admin-edit-btn {
+            background: none;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .admin-edit-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.05);
+        }
+        
+        /* Admin Modal */
+        #adminModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+        #adminModal.show { display: flex; }
+        
+        .admin-modal-content {
+            position: relative;
+            width: calc(90% - 10px);
+            max-width: 440px;
+            max-height: min(690px, calc(90vh - 10px));
+            background: linear-gradient(180deg, rgba(30, 15, 40, 0.98) 0%, rgba(10, 5, 20, 0.98) 100%);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(0,0,0,0.8);
+            animation: modalFadeIn 0.3s ease-out;
+            overflow: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .admin-modal-content::before, .admin-modal-content::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 3px solid #d4af37;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .admin-modal-content::before {
+            top: 8px;
+            left: 8px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .admin-modal-content::after {
+            bottom: 8px;
+            right: 8px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        .admin-modal-title {
+            font-size: 1.4rem;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        #adminInterface {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        #adminMembersList {
+            max-height: 320px;
+            overflow-y: auto;
+            background: rgba(10, 5, 15, 0.6);
+            border: 2px solid #8a6e2f;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 0;
+        }
+        
+        .admin-member-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .admin-member-item:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        .admin-remove-btn {
+            background: #ff4444;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .admin-remove-btn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+        
+        .admin-add-section {
+            margin: 0;
+            padding-top: 8px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+        
+        .admin-input {
+            width: 100%;
+            background: rgba(10, 5, 15, 0.6);
+            border: 2px solid #8a6e2f;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            padding: 12px;
+            border-radius: 12px;
+            outline: none;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        
+        .admin-input::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+        
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
         /* Login Modal Popup */
         #loginScreen { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(5px); }
         #loginScreen.show { display: flex; }
-        .login-modal { position: relative; width: 90%; max-width: 400px; background: linear-gradient(180deg, rgba(30, 15, 40, 0.98) 0%, rgba(10, 5, 20, 0.98) 100%); border: 3px solid #d4af37; border-radius: 20px; padding: 30px; box-shadow: 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(0,0,0,0.8); animation: modalFadeIn 0.3s ease-out; }
+        .login-modal { position: relative; width: calc(90% - 10px); max-width: 440px; max-height: min(690px, calc(90vh - 10px)); background: linear-gradient(180deg, rgba(30, 15, 40, 0.98) 0%, rgba(10, 5, 20, 0.98) 100%); border: 3px solid #d4af37; border-radius: 20px; padding: 30px; box-shadow: 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(0,0,0,0.8); animation: modalFadeIn 0.3s ease-out; box-sizing: border-box; overflow-y: auto; }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         .modal-corners { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
         .modal-corners::before, .modal-corners::after { content: ''; position: absolute; width: 15px; height: 15px; border: 3px solid #d4af37; }
@@ -105,6 +282,7 @@
         .login-title { font-size: clamp(1.2rem, 5vw, 1.6rem); margin-bottom: 20px; color: #ffd700; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); letter-spacing: 2px; text-align: center; }
         .password-input { width: 100%; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; padding: 12px; border-radius: 12px; outline: none; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); margin-bottom: 15px; text-align: center; letter-spacing: 2px; }
         .password-input::placeholder { color: #888; font-style: italic; letter-spacing: 1px; }
+        #adminPasswordSection { flex-shrink: 0; }
         .error-message { color: #ff4444; font-size: 0.9rem; margin-top: 5px; opacity: 0; transition: opacity 0.3s; }
         .error-message.show { opacity: 1; }
         .modal-buttons { display: flex; gap: 10px; width: 100%; margin-top: 10px; }
@@ -131,6 +309,41 @@
         </div>
     </div>
     
+    <!-- Admin Modal -->
+    <div id="adminModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-title">✏️ EDIT MEMBERS ✏️</div>
+            
+            <!-- Password check for admin -->
+            <div id="adminPasswordSection">
+                <div style="text-align: center; margin-bottom: 15px; color: #d4af37; font-size: 0.95rem;">Enter admin password to edit</div>
+                <input type="password" id="adminPasswordInput" class="admin-input" placeholder="Admin Password" autocomplete="off" style="text-align: center; letter-spacing: 2px;" />
+                <div class="error-message" id="adminErrorMessage" style="text-align: center; margin-top: 10px;">❌ Invalid Password</div>
+                <div class="admin-buttons">
+                    <button class="btn" onclick="verifyAdminPassword()" style="flex: 1;">VERIFY</button>
+                    <button class="btn" onclick="closeAdminModal()" style="flex: 1; background: #444;">CANCEL</button>
+                </div>
+            </div>
+            
+            <!-- Admin interface (hidden until authenticated) -->
+            <div id="adminInterface" style="display: none;">
+                <div id="adminMembersList"></div>
+                
+                <div class="admin-add-section">
+                    <div style="color: #ffd700; font-size: 1rem; margin-bottom: 10px; text-align: center;">➕ Add New Member</div>
+                    <input type="text" id="newMemberInput" class="admin-input" placeholder="Member name" />
+                    <div style="display: flex; justify-content: center; margin-top: 10px;">
+                        <button class="btn" onclick="addMember()" style="width: 100%; max-width: 300px;">ADD MEMBER</button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                    <button class="btn" onclick="closeAdminModal()" style="width: 100%; max-width: 300px; background: #444;">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div id="setupScreen" class="card">
         <div id="fireOverlay"></div><div class="card-corners-extra"></div>
         <div class="setup-title" style="display: flex; align-items: center; justify-content: center; gap: clamp(5px, 2vw, 10px); width: 90%;"><span style="font-size: clamp(1rem, 4vw, 1.4rem);">⚜</span><span>ROLL MEMBERS</span><span style="font-size: clamp(1rem, 4vw, 1.4rem);">⚜</span></div>
@@ -140,16 +353,27 @@
             <button class="btn" id="btnManualMode" onclick="switchMode('manual')" style="flex: 1; padding: 10px 8px; font-size: clamp(0.8rem, 3.5vw, 1rem); height: auto; max-width: none; white-space: normal; line-height: 1.2;">Manual List</button>
             <button class="btn" id="btnAllianceMode" onclick="switchMode('alliance')" style="flex: 1; padding: 10px 8px; background: #444; font-size: clamp(0.8rem, 3.5vw, 1rem); height: auto; max-width: none; white-space: normal; line-height: 1.2;">Alliance Members</button>
         </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 15px; width: 100%;">
+            <a href="slot.html?from=alliance" class="slot-access-btn" id="slotAccessBtn" style="flex: 1; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">🎰 ALLIANCE SLOT</a>
+            <a href="blackjack.html?from=alliance" class="slot-access-btn" id="bjAccessBtn" style="flex: 1; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">🎴 ALLIANCE BLACKJACK</a>
+        </div>
         
         <!-- Manual input -->
         <textarea id="inputNames" placeholder="Paste your list here..."></textarea>
         
         <!-- Alliance members checkboxes -->
-        <div id="allianceMembers" style="display: none; width: 100%; flex-grow: 1; overflow-y: auto; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #8a6e2f;">
-                <button onclick="selectAllMembers(true)" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">Select All</button>
-                <button onclick="selectAllMembers(false)" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">Deselect All</button>
+        <div id="allianceMembers" style="display: none; width: 100%; max-height: 420px; overflow-y: auto; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #8a6e2f; flex-wrap: wrap; gap: 5px;">
+                <div style="display: flex; gap: 5px;">
+                    <button onclick="selectAllMembers(true)" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">Select All</button>
+                    <button onclick="selectAllMembers(false)" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">Deselect All</button>
+                </div>
+                <button class="admin-edit-btn" onclick="openAdminModal()">
+                    <span>✏️</span>
+                    <span>Edit</span>
+                </button>
             </div>
+            
             <div id="membersList"></div>
         </div>
         
@@ -169,21 +393,140 @@
         </div>
     </div>
     <script>
+        // API Configuration
+        const API_URL = 'http://127.0.0.1:5000'; // Local testing
+        let adminSessionId = null;
+        
         // Alliance members predefinidos
-        const allianceMembers = [
-            "Nɛfɛrէăɾîღ", "Kiera", "Astraea", "Czarina K", "Cinder",
-            "꧁༺Ger~wιη༻꧂", "༄ bคstetFนrץ° ࿐", "Calliope", "Kakia",
-            "࿐Scarletbird", "Эш", "々ʀᴀɢɴᴀʀᴏᴋचोर", "Queen VK", "LιLιтн",
-            "Betty boo", "Meeza", "εïз Flσяα ʚ ɞ", "ʚɞCłøvərⳊ", "Ing",
-            "°Valkyrie°", "꧁aphroditε꧂", "Ilion", "Rσнαɴ彡", "Moon"
+        const defaultAllianceMembers = [
+            "Nɛfɛrէăɾîღ",
+            "Kiera",
+            "Astraea",
+            "Czarina K",
+            "Cinder",
+            "꧁༺Ger~wιη༻꧂",
+            "༄ bคstetFนrץ° ࿐",
+            "Calliope",
+            "Kakia",
+            "࿐Scarletbird",
+            "Эш",
+            "々ʀᴀɢɴᴀʀᴏᴋचोर",
+            "Queen VK",
+            "LιLιтн",
+            "Betty boo",
+            "Meeza",
+            "εïз Flσяα ʚ ɞ",
+            "ʚɞCłøvərⳊ",
+            "Ing",
+            "°Valkyrie°",
+            "꧁aphroditε꧂",
+            "Ilion",
+            "Rσнαɴ彡",
+            "Moon"
         ];
         
+        let allianceMembers = [...defaultAllianceMembers];
         const correctPassword = "24neF";
         let currentMode = 'manual'; // 'manual' o 'alliance'
         let lista = [];
         const fantasyEmojis = ["⚔️", "🛡️", "🔮", "👑", "🐉", "⚜️", "🏰", "📜", "🍷", "💍", "🦄", "🔥", "🦅", "🗡️", "🏹", "🪓", "🩸", "⛓️", "🗝️", "🌑", "🧙‍♂️", "🧙‍♀️", "🧚", "🧞", "🧝", "🧛", "🧟", "🧟‍♀️", "🧜", "👺", "👹", "🐺", "🦁", "🐎", "🦇", "🦉", "🕷️", "🦂", "🐍", "🐊", "☠️", "💀", "⚰️", "🏺", "🧿", "🕯️", "☄️", "⚡", "🌟", "🌙"];
         
+        // Mini Slot Machine
+        const miniSlotSymbols = ["🐉", "🐝", "🦓", "👹"]; // Dragon, Bee, Zoo, Ros
+        let isSpinning = false;
+        
+        function openMiniSlot() {
+            const miniSlotScreen = document.getElementById('miniSlotScreen');
+            const result = document.getElementById('miniSlotResult');
+            result.textContent = '';
+            miniSlotScreen.classList.add('show');
+            playFireSound();
+        }
+        
+        function closeMiniSlot() {
+            const miniSlotScreen = document.getElementById('miniSlotScreen');
+            miniSlotScreen.classList.remove('show');
+        }
+        
+        function spinMiniSlot() {
+            if (isSpinning) return;
+            isSpinning = true;
+            
+            const reel1 = document.getElementById('miniReel1');
+            const reel2 = document.getElementById('miniReel2');
+            const reel3 = document.getElementById('miniReel3');
+            const result = document.getElementById('miniSlotResult');
+            const btn = document.getElementById('miniSlotBtn');
+            
+            btn.disabled = true;
+            result.textContent = '';
+            reel1.classList.add('spinning');
+            reel2.classList.add('spinning');
+            reel3.classList.add('spinning');
+            
+            // Animate reels
+            let counter = 0;
+            const interval = setInterval(() => {
+                reel1.textContent = miniSlotSymbols[Math.floor(Math.random() * miniSlotSymbols.length)];
+                reel2.textContent = miniSlotSymbols[Math.floor(Math.random() * miniSlotSymbols.length)];
+                reel3.textContent = miniSlotSymbols[Math.floor(Math.random() * miniSlotSymbols.length)];
+                counter++;
+                
+                if (counter > 20) {
+                    clearInterval(interval);
+                    
+                    // Final result
+                    const final1 = miniSlotSymbols[Math.floor(Math.random() * miniSlotSymbols.length)];
+                    const final2 = miniSlotSymbols[Math.floor(Math.random() * miniSlotSymbols.length)];
+                    const final3 = miniSlotSymbols[Math.floor(Math.random() * miniSlotSymbols.length)];
+                    
+                    reel1.textContent = final1;
+                    reel2.textContent = final2;
+                    reel3.textContent = final3;
+                    
+                    reel1.classList.remove('spinning');
+                    reel2.classList.remove('spinning');
+                    reel3.classList.remove('spinning');
+                    
+                    // Check result
+                    setTimeout(() => {
+                        if (final1 === '🐉' && final2 === '🐉' && final3 === '🐉') {
+                            result.textContent = '🏆 TRIPLE DRAGON! WINGS OF FIRE REIGNS! 🏆';
+                            result.style.color = '#ffd700';
+                            playWinnerSound();
+                        } else if (final1 === final2 && final2 === final3) {
+                            if (final1 === '🐝') {
+                                result.textContent = '✨ TRIPLE BEE! ALLIANCE STRONG! ✨';
+                                result.style.color = '#ffeb3b';
+                            } else if (final1 === '🦓') {
+                                result.textContent = '✨ TRIPLE ZOO! WILD VICTORY! ✨';
+                                result.style.color = '#8bc34a';
+                            } else if (final1 === '👹') {
+                                result.textContent = '💀 TRIPLE ROS... You Lost! 💀';
+                                result.style.color = '#f44336';
+                            }
+                            playFireSound();
+                        } else if ((final1 === '🐝' || final2 === '🐝' || final3 === '🐝') && 
+                                   (final1 === '🦓' || final2 === '🦓' || final3 === '🦓')) {
+                            result.textContent = '🐝🦓 BEE & ZOO ALLIANCE! GOOD! ✅';
+                            result.style.color = '#4caf50';
+                        } else if (final1 === '👹' || final2 === '👹' || final3 === '👹') {
+                            result.textContent = '👹 ROS APPEARED... BAD LUCK! ❌';
+                            result.style.color = '#ff5252';
+                        } else {
+                            result.textContent = 'TRY AGAIN!';
+                            result.style.color = '#9e9e9e';
+                        }
+                        
+                        btn.disabled = false;
+                        isSpinning = false;
+                    }, 300);
+                }
+            }, 100);
+        }
+        
         const loginScreen = document.getElementById('loginScreen'), setupScreen = document.getElementById('setupScreen'), lotteryCard = document.getElementById('lotteryCard'), fireOverlay = document.getElementById('fireOverlay'), inputNames = document.getElementById('inputNames'), slotTop = document.getElementById('slot-top'), slotMid = document.getElementById('slot-mid'), slotBot = document.getElementById('slot-bot'), btn = document.getElementById('btnRoll'), btnBack = document.getElementById('btnBack');
+        const editMembersScreen = document.getElementById('editMembersScreen');
         let isRolling = false;
 
         // Show password prompt
@@ -200,6 +543,8 @@
         // Close password prompt
         function closePasswordPrompt() {
             loginScreen.classList.remove('show');
+            // Limpiar hash y volver a manual mode
+            window.location.href = 'index.html';
         }
         
         // Check password
@@ -212,8 +557,25 @@
                 allianceUnlocked = true;
                 playFireSound();
                 loginScreen.classList.remove('show');
+                
+                // Show slot access button
+                const slotAccessBtn = document.getElementById('slotAccessBtn');
+                if (slotAccessBtn) slotAccessBtn.classList.add('show');
+                
+                // Show blackjack button
+                const bjAccessBtn = document.getElementById('bjAccessBtn');
+                if (bjAccessBtn) bjAccessBtn.classList.add('show');
+                
+                // Navegar al destino solicitado
+                const hash = window.location.hash;
                 setTimeout(() => {
-                    switchMode('alliance'); // Cambiar a alliance mode después de desbloquear
+                    if (hash === '#edit') {
+                        switchMode('alliance').then(() => {
+                            setTimeout(() => openAdminModal(), 200);
+                        });
+                    } else {
+                        switchMode('alliance'); // Cambiar a alliance mode después de desbloquear
+                    }
                 }, 100);
             } else {
                 errorMessage.classList.add('show');
@@ -230,12 +592,44 @@
         
         // Enter key support for password
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded - Hash:', window.location.hash);
+            
             const passwordInput = document.getElementById('passwordInput');
             passwordInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') checkPassword();
             });
+            
+            // Handle navigation hash on page load
+            const hash = window.location.hash;
+            if (hash === '#edit') {
+                console.log('Hash #edit detectado - Abriendo modal de admin directamente');
+                // Para #edit, abrir modal de admin sin pasar por contraseña de alianza
+                openAdminModal();
+            } else if (hash === '#alliance') {
+                console.log('Hash #alliance detectado - Mostrando modal de contraseña de alianza');
+                // Para #alliance, pedir contraseña de alianza
+                showPasswordPrompt();
+            }
         });
 
+        // Cargar miembros desde servidor
+        async function loadMembersFromServer() {
+            try {
+                const response = await fetch(`${API_URL}/api/members`);
+                const data = await response.json();
+                
+                if (data.success && data.members.length > 0) {
+                    allianceMembers = data.members;
+                    initAllianceMembers();
+                }
+            } catch (error) {
+                console.error('Error loading members from server:', error);
+                // Si falla, usar lista por defecto
+                allianceMembers = [...defaultAllianceMembers];
+                initAllianceMembers();
+            }
+        }
+        
         // Inicializar lista de alliance members
         function initAllianceMembers() {
             const membersList = document.getElementById('membersList');
@@ -247,10 +641,169 @@
             `).join('');
         }
         
+        // === ADMIN FUNCTIONS ===
+        
+        function openAdminModal() {
+            window.history.replaceState(null, '', 'index.html#edit');
+            document.getElementById('adminModal').classList.add('show');
+            document.getElementById('adminPasswordSection').style.display = 'block';
+            document.getElementById('adminInterface').style.display = 'none';
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('adminErrorMessage').classList.remove('show');
+        }
+        
+        function closeAdminModal() {
+            const wasAuthenticated = document.getElementById('adminInterface').style.display === 'block';
+            document.getElementById('adminModal').classList.remove('show');
+            
+            if (wasAuthenticated) {
+                // Si estaba viendo la interfaz de admin, volver a alliance
+                window.history.replaceState(null, '', 'index.html#alliance');
+            } else {
+                // Si solo estaba en la pantalla de password, volver a alliance también
+                window.history.replaceState(null, '', 'index.html#alliance');
+            }
+            
+            adminSessionId = null;
+        }
+        
+        async function verifyAdminPassword() {
+            const password = document.getElementById('adminPasswordInput').value;
+            const errorMsg = document.getElementById('adminErrorMessage');
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    adminSessionId = data.admin_session_id;
+                    document.getElementById('adminPasswordSection').style.display = 'none';
+                    document.getElementById('adminInterface').style.display = 'block';
+                    await loadAdminMembers();
+                } else {
+                    errorMsg.classList.add('show');
+                    setTimeout(() => errorMsg.classList.remove('show'), 2000);
+                }
+            } catch (error) {
+                console.error('Admin login error:', error);
+                errorMsg.textContent = '❌ Connection error';
+                errorMsg.classList.add('show');
+                setTimeout(() => errorMsg.classList.remove('show'), 2000);
+            }
+        }
+        
+        async function loadAdminMembers() {
+            if (!adminSessionId) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/members`, {
+                    method: 'GET',
+                    headers: { 'X-Admin-Session': adminSessionId }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    allianceMembers = data.members.length > 0 ? data.members : [...defaultAllianceMembers];
+                    renderAdminMembers();
+                    initAllianceMembers(); // Update main list
+                }
+            } catch (error) {
+                console.error('Load members error:', error);
+            }
+        }
+        
+        function renderAdminMembers() {
+            const list = document.getElementById('adminMembersList');
+            list.innerHTML = allianceMembers.map((member, index) => `
+                <div class="admin-member-item">
+                    <span>${member}</span>
+                    <button class="admin-remove-btn" onclick="removeMember('${member.replace(/'/g, "\\'")}')">Remove</button>
+                </div>
+            `).join('');
+        }
+        
+        async function addMember() {
+            const input = document.getElementById('newMemberInput');
+            const name = input.value.trim();
+            
+            if (!name) return;
+            
+            if (!adminSessionId) {
+                alert('Session expired. Please login again.');
+                closeAdminModal();
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/members/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Session': adminSessionId
+                    },
+                    body: JSON.stringify({ name })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    allianceMembers = data.members;
+                    renderAdminMembers();
+                    initAllianceMembers();
+                    input.value = '';
+                } else {
+                    alert(data.error || 'Failed to add member');
+                }
+            } catch (error) {
+                console.error('Add member error:', error);
+                alert('Connection error');
+            }
+        }
+        
+        async function removeMember(name) {
+            if (!confirm(`Remove ${name}?`)) return;
+            
+            if (!adminSessionId) {
+                alert('Session expired. Please login again.');
+                closeAdminModal();
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/members/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Session': adminSessionId
+                    },
+                    body: JSON.stringify({ name })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    allianceMembers = data.members;
+                    renderAdminMembers();
+                    initAllianceMembers();
+                } else {
+                    alert(data.error || 'Failed to remove member');
+                }
+            } catch (error) {
+                console.error('Remove member error:', error);
+                alert('Connection error');
+            }
+        }
+        
         // Cambiar modo
         let allianceUnlocked = false;
         
-        function switchMode(mode) {
+        async function switchMode(mode) {
             if (mode === 'alliance' && !allianceUnlocked) {
                 // Pedir contraseña
                 showPasswordPrompt();
@@ -268,11 +821,20 @@
                 btnAlliance.style.background = '#444';
                 inputArea.style.display = 'block';
                 allianceArea.style.display = 'none';
+                document.getElementById('slotAccessBtn').classList.remove('show');
+                document.getElementById('bjAccessBtn').classList.remove('show');
+                window.history.replaceState(null, '', 'index.html');
             } else {
                 btnManual.style.background = '#444';
                 btnAlliance.style.background = 'linear-gradient(180deg, #d4af37 0%, #96732b 100%)';
                 inputArea.style.display = 'none';
                 allianceArea.style.display = 'block';
+                document.getElementById('slotAccessBtn').classList.add('show');
+                document.getElementById('bjAccessBtn').classList.add('show');
+                window.history.replaceState(null, '', 'index.html#alliance');
+                
+                // Cargar miembros desde el servidor
+                await loadMembersFromServer();
             }
         }
         
@@ -380,7 +942,7 @@
         }
 
         // --- LOGICA DE NAVEGACION ---
-        function animarYCambiar(d) { 
+        async function animarYCambiar(d) { 
             if (isRolling) return; // Bloqueo si esta girando
 
             // Validacion segun modo
@@ -410,8 +972,8 @@
             void fireOverlay.offsetWidth; 
             fireOverlay.classList.add('animate-fire'); 
             
-            setTimeout(() => { 
-                if (d === 'forward') ejecutarStart(); 
+            setTimeout(async () => { 
+                if (d === 'forward') await ejecutarStart(); 
                 else ejecutarBack(); 
                 const nc = (d === 'forward') ? lotteryCard : setupScreen; 
                 nc.appendChild(fireOverlay); 
@@ -419,16 +981,36 @@
         }
 
         // Preparar lista de nombres
-        function ejecutarStart() { 
+        async function ejecutarStart() { 
             let l = [];
             
             if (currentMode === 'manual') {
                 // Modo manual: usar textarea
                 l = inputNames.value.trim().split('\n').map(x => x.trim()).filter(x => x.length > 0);
             } else {
-                // Modo alliance: usar checkboxes seleccionados
-                const checkedBoxes = document.querySelectorAll('#membersList input[type="checkbox"]:checked');
-                l = Array.from(checkedBoxes).map(cb => cb.value);
+                // Modo alliance: cargar lista del servidor
+                try {
+                    const response = await fetch(`${API_URL}/api/members`);
+                    const data = await response.json();
+                    
+                    if (data.success && data.members.length > 0) {
+                        // Obtener seleccionados del checkbox
+                        const checkedBoxes = document.querySelectorAll('#membersList input[type="checkbox"]:checked');
+                        const selectedValues = Array.from(checkedBoxes).map(cb => cb.value);
+                        
+                        // Usar lista del servidor como fuente de verdad
+                        l = data.members.filter(m => selectedValues.includes(m));
+                    } else {
+                        // Fallback: usar checkboxes locales
+                        const checkedBoxes = document.querySelectorAll('#membersList input[type="checkbox"]:checked');
+                        l = Array.from(checkedBoxes).map(cb => cb.value);
+                    }
+                } catch (error) {
+                    console.error('Error loading members for lottery:', error);
+                    // Fallback: usar checkboxes locales
+                    const checkedBoxes = document.querySelectorAll('#membersList input[type="checkbox"]:checked');
+                    l = Array.from(checkedBoxes).map(cb => cb.value);
+                }
             }
             
             let ed = [...fantasyEmojis]; 
