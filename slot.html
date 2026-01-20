@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Alliance Slot - Wings of Fire</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
@@ -16,11 +16,12 @@
 
         .slot-card { 
             position: relative; 
-            width: 90%; 
+            width: 95%; 
             max-width: 450px; 
-            height: 700px;
-            max-height: 90vh;
-            padding: 40px 30px;
+            height: auto;
+            min-height: 600px;
+            max-height: 95vh;
+            padding: clamp(20px, 5vw, 40px) clamp(15px, 4vw, 30px);
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -35,11 +36,13 @@
         .slot-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
         .slot-title { 
-            font-size: 1.6rem; color: #ffd700; 
-            text-transform: uppercase; letter-spacing: 3px; 
+            font-size: clamp(1.2rem, 4vw, 1.6rem); 
+            color: #ffd700; 
+            text-transform: uppercase; 
+            letter-spacing: clamp(2px, 0.5vw, 3px); 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
-            margin-bottom: 15px;
-            margin-top: 45px;
+            margin-bottom: clamp(10px, 2vh, 15px);
+            margin-top: clamp(25px, 5vh, 45px);
         }
 
         .slot-reels { 
@@ -48,11 +51,12 @@
         }
 
         .reel { 
-            width: 90px; height: 90px; 
+            width: clamp(70px, 18vw, 90px); 
+            height: clamp(70px, 18vw, 90px); 
             background: rgba(0, 0, 0, 0.5); 
             border: 3px solid #d4af37; border-radius: 15px; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 3rem; 
+            font-size: clamp(2.2rem, 7vw, 3rem); 
             box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 5px 15px rgba(0,0,0,0.5); 
             transition: all 0.3s; 
         }
@@ -76,9 +80,11 @@
         .spin-btn { 
             background: linear-gradient(135deg, #d4af37 0%, #8a6e2f 100%); 
             color: #1a0b2e; border: none; 
-            padding: 15px 40px; border-radius: 12px; 
+            padding: clamp(12px, 3vw, 15px) clamp(30px, 6vw, 40px); 
+            border-radius: 12px; 
             cursor: pointer; font-family: 'Cinzel', serif; 
-            font-size: 1.2rem; font-weight: bold; 
+            font-size: clamp(1rem, 2.5vw, 1.2rem); 
+            font-weight: bold; 
             text-transform: uppercase; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
             transition: all 0.2s; 
@@ -470,6 +476,51 @@
         
         .close-modal-btn:hover {
             transform: scale(1.05);
+        }
+        
+        /* Media Queries para diferentes tamaños */
+        @media (max-width: 480px) {
+            .slot-card {
+                width: 98%;
+                padding: 15px 10px;
+                min-height: 550px;
+            }
+            
+            .slot-reels {
+                gap: 10px;
+            }
+            
+            .reel {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .points-label {
+                font-size: 0.65rem;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .slot-card {
+                padding: 15px 20px;
+                min-height: auto;
+            }
+            
+            .slot-title {
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .slot-reels {
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .slot-card {
+                max-width: 500px;
+            }
         }
     </style>
 </head>

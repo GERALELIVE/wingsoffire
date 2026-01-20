@@ -19,11 +19,12 @@
         /* Tarjeta principal */
         .card { 
             position: relative; 
-            width: 90%; 
+            width: 95%; 
             max-width: 450px; 
-            height: 700px;
-            max-height: 90vh;
-            padding: 40px 30px; 
+            height: auto;
+            min-height: 600px;
+            max-height: 95vh;
+            padding: clamp(20px, 5vw, 40px) clamp(15px, 4vw, 30px); 
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -47,7 +48,7 @@
         .setup-title { font-size: clamp(1.2rem, 5vw, 1.6rem); margin-bottom: 10px; color: #ffd700; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); letter-spacing: 2px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; width: 80%; }
 
         /* Input */
-        textarea { width: 100%; flex-grow: 1; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; padding: 15px; border-radius: 12px; resize: none; outline: none; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); margin-bottom: 15px; box-sizing: border-box; text-align: left; }
+        textarea { width: 100%; flex-grow: 1; min-height: 120px; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; color: #fff; font-family: 'Playfair Display', serif; font-size: clamp(0.95rem, 3vw, 1.1rem); padding: clamp(10px, 3vw, 15px); border-radius: 12px; resize: none; outline: none; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); margin-bottom: 15px; box-sizing: border-box; text-align: left; }
         textarea::placeholder { color: #888; font-style: italic; font-family: 'Cinzel', serif; text-align: center; padding-top: 25%; } 
         textarea:focus::placeholder { padding-top: 0; opacity: 0.5; }
 
@@ -62,14 +63,14 @@
         @keyframes flapRight { 0%, 100% { transform: rotate(-5deg) scale(1); } 50% { transform: rotate(-12deg) scale(1.05); } }
 
         /* Slot Window */
-        .slot-window { width: 100%; overflow: hidden; position: relative; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; border-radius: 12px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 30px rgba(0,0,0,0.9); flex-grow: 1; }
+        .slot-window { width: 100%; min-height: 180px; overflow: hidden; position: relative; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; border-radius: 12px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: inset 0 0 30px rgba(0,0,0,0.9); flex-grow: 1; }
         .candidate-row { font-family: 'Playfair Display', serif; display: flex; justify-content: center; align-items: center; position: absolute; left: 0; right: 0; width: 100%; height: 60px; white-space: nowrap; transition: all 0.1s linear; }
         
-        .row-top { top: 20%; transform: translateY(-50%) scale(0.9); font-size: 1rem; opacity: 0.5; color: #d4af37; filter: blur(1px); } 
-        .row-bot { top: 80%; transform: translateY(-50%) scale(0.9); font-size: 1rem; opacity: 0.5; color: #d4af37; filter: blur(1px); }
-        .row-mid { top: 50%; transform: translateY(-50%); font-size: 1.8rem; opacity: 1; color: #fff; font-weight: bold; z-index: 10; }
+        .row-top { top: 20%; transform: translateY(-50%) scale(0.9); font-size: clamp(0.8rem, 2.5vw, 1rem); opacity: 0.5; color: #d4af37; filter: blur(1px); } 
+        .row-bot { top: 80%; transform: translateY(-50%) scale(0.9); font-size: clamp(0.8rem, 2.5vw, 1rem); opacity: 0.5; color: #d4af37; filter: blur(1px); }
+        .row-mid { top: 50%; transform: translateY(-50%); font-size: clamp(1.3rem, 5vw, 1.8rem); opacity: 1; color: #fff; font-weight: bold; z-index: 10; }
         
-        .row-winner { top: 50%; transform: translateY(-50%); font-size: 3.0rem; opacity: 1; font-weight: 900; z-index: 20; color: #ffe0e0; text-shadow: 0 0 5px #fff, 0 0 10px #ff4da6, 0 0 20px #ff4500; animation: winnerPulse 2s infinite alternate; width: auto; max-width: 95%; }
+        .row-winner { top: 50%; transform: translateY(-50%); font-size: clamp(2rem, 8vw, 3.0rem); opacity: 1; font-weight: 900; z-index: 20; color: #ffe0e0; text-shadow: 0 0 5px #fff, 0 0 10px #ff4da6, 0 0 20px #ff4500; animation: winnerPulse 2s infinite alternate; width: auto; max-width: 95%; }
         .row-winner::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 110%; height: 120%; background: radial-gradient(ellipse at center, rgba(255, 69, 0, 0.4) 0%, rgba(255, 0, 0, 0.1) 60%, transparent 100%); filter: blur(15px); z-index: -1; opacity: 0.8; animation: flameFlicker 0.1s infinite alternate; }
         
         @keyframes winnerPulse { 0% { transform: translateY(-50%) scale(1.1); } 100% { transform: translateY(-50%) scale(1.15); } } 
@@ -78,16 +79,16 @@
         .hidden { opacity: 0 !important; }
         
         /* Botones */
-        .controls-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; height: 50px; margin-top: 5px; }
-        .btn { background: linear-gradient(180deg, #d4af37 0%, #96732b 100%); border: 2px solid #fbeea9; height: 45px; padding: 0 20px; font-family: 'Cinzel', serif; font-size: clamp(0.9rem, 4vw, 1.1rem); font-weight: bold; color: #2a1a05; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.6); transition: all 0.2s; outline: none; text-transform: uppercase; letter-spacing: 1px; flex-grow: 1; max-width: 280px; white-space: nowrap; display: flex; justify-content: center; align-items: center; }
+        .controls-container { display: flex; justify-content: center; align-items: center; gap: clamp(5px, 2vw, 10px); width: 100%; height: auto; min-height: 45px; margin-top: 5px; flex-wrap: wrap; }
+        .btn { background: linear-gradient(180deg, #d4af37 0%, #96732b 100%); border: 2px solid #fbeea9; height: auto; min-height: 45px; padding: clamp(10px, 2.5vw, 15px) clamp(15px, 4vw, 20px); font-family: 'Cinzel', serif; font-size: clamp(0.85rem, 3vw, 1.1rem); font-weight: bold; color: #2a1a05; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.6); transition: all 0.2s; outline: none; text-transform: uppercase; letter-spacing: 1px; flex-grow: 1; max-width: 280px; white-space: nowrap; display: flex; justify-content: center; align-items: center; }
         .btn:hover { filter: brightness(1.1); transform: translateY(-2px); } .btn:active { transform: translateY(1px); } 
         .btn:disabled { background: #444; color: #888; border-color: #666; cursor: not-allowed; transform: none; }
         
-        .btn-back { background: rgba(0,0,0,0.4); border: 2px solid #d4af37; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: all 0.2s; flex-shrink: 0; }
+        .btn-back { background: rgba(0,0,0,0.4); border: 2px solid #d4af37; border-radius: 50%; width: clamp(40px, 10vw, 45px); height: clamp(40px, 10vw, 45px); display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: all 0.2s; flex-shrink: 0; }
         .btn-back:hover { background: rgba(212, 175, 55, 0.2); transform: scale(1.05); } .btn-back:active { transform: scale(0.95); } 
         .btn-back.disabled { opacity: 0.3; pointer-events: none; filter: grayscale(100%); }
         
-        .arrow-icon { width: 20px; height: 20px; fill: #d4af37; }
+        .arrow-icon { width: clamp(16px, 5vw, 20px); height: clamp(16px, 5vw, 20px); fill: #d4af37; }
         
         /* Transición de Fuego */
         #fireOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(50, 0, 0, 1) 0%, rgba(255, 50, 0, 0.8) 40%, rgba(255, 150, 0, 0.4) 70%, transparent 100%); z-index: 999; transform: translateY(100%); pointer-events: none; mix-blend-mode: screen; }
@@ -287,7 +288,41 @@
         .error-message.show { opacity: 1; }
         .modal-buttons { display: flex; gap: 10px; width: 100%; margin-top: 10px; }
         
-        @media (max-height: 600px) { .card { padding: 15px; } .slot-window { height: 140px; } .wing-svg { width: 40px; height: 40px; } h1 { font-size: 1.2rem; } .setup-title { font-size: 1.2rem; margin-bottom: 5px; } textarea { margin-bottom: 10px; } }
+        /* === MEDIA QUERIES RESPONSIVE === */
+        
+        /* Mobile phones - Small screens */
+        @media (max-width: 480px) {
+            .card { padding: clamp(15px, 4vw, 20px); min-height: 550px; }
+            h1 { font-size: clamp(1rem, 4.5vw, 1.3rem); }
+            .setup-title { font-size: clamp(1rem, 4.5vw, 1.3rem); }
+            .slot-window { min-height: 160px; }
+            .wing-svg { width: clamp(35px, 10vw, 50px); height: clamp(35px, 10vw, 50px); }
+            .candidate-row { height: 50px; }
+            .row-mid { font-size: clamp(1.2rem, 4.5vw, 1.5rem); }
+            .row-winner { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+            textarea { font-size: clamp(0.9rem, 2.8vw, 1rem); min-height: 100px; }
+            .btn { font-size: clamp(0.8rem, 2.8vw, 1rem); min-height: 42px; }
+        }
+        
+        /* Short screens */
+        @media (max-height: 700px) {
+            .card { padding: 15px 20px; min-height: auto; }
+            .slot-window { min-height: 140px; }
+            h1, .setup-title { font-size: clamp(1rem, 4vw, 1.2rem); margin: 5px 0; }
+            .wing-svg { width: 40px; height: 40px; }
+            textarea { margin-bottom: 8px; }
+            .controls-container { margin-top: 5px; }
+        }
+        
+        /* Tablets and larger */
+        @media (min-width: 768px) {
+            .card { max-width: 480px; padding: 45px 35px; }
+            .slot-window { min-height: 200px; }
+            h1 { font-size: 1.7rem; }
+            .setup-title { font-size: 1.5rem; }
+            .row-mid { font-size: 1.9rem; }
+            .row-winner { font-size: 3.2rem; }
+        }
     </style>
 </head>
 <body>

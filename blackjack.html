@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Alliance Blackjack - Wings of Fire</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
@@ -16,11 +16,12 @@
 
         .bj-card { 
             position: relative; 
-            width: 90%; 
+            width: 95%; 
             max-width: 450px; 
-            height: 700px;
-            max-height: 90vh;
-            padding: 40px 30px;
+            height: auto;
+            min-height: 600px;
+            max-height: 95vh;
+            padding: clamp(20px, 5vw, 40px) clamp(15px, 4vw, 30px);
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -38,24 +39,26 @@
         .bj-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
         .bj-title { 
-            font-size: 1.6rem; color: #ffd700; 
-            text-transform: uppercase; letter-spacing: 3px; 
+            font-size: clamp(1.2rem, 4vw, 1.6rem); 
+            color: #ffd700; 
+            text-transform: uppercase; 
+            letter-spacing: clamp(2px, 0.5vw, 3px); 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
-            margin-bottom: 10px;
-            margin-top: 35px;
+            margin-bottom: clamp(5px, 2vh, 10px);
+            margin-top: clamp(20px, 5vh, 35px);
             flex-shrink: 0;
         }
 
         /* Top Controls */
         .level-display {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: clamp(10px, 3vw, 20px);
+            left: clamp(10px, 3vw, 20px);
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 8px;
-            padding: 8px 15px;
-            font-size: 0.9rem;
+            padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             color: #ffd700;
             font-weight: bold;
             letter-spacing: 1px;
@@ -64,15 +67,15 @@
         
         .back-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: clamp(10px, 3vw, 20px);
+            right: clamp(10px, 3vw, 20px);
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 8px;
-            padding: 8px 15px;
+            padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
             cursor: pointer;
             color: #d4af37;
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             font-weight: bold;
             transition: all 0.2s;
             z-index: 10;
@@ -89,11 +92,11 @@
         
         .info-btn {
             position: absolute;
-            top: 20px;
+            top: clamp(10px, 3vw, 20px);
             left: 50%;
             transform: translateX(-50%);
-            width: 35px;
-            height: 35px;
+            width: clamp(30px, 8vw, 35px);
+            height: clamp(30px, 8vw, 35px);
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 50%;
@@ -102,7 +105,7 @@
             justify-content: center;
             cursor: pointer;
             color: #ffd700;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             font-weight: bold;
             font-family: 'Cinzel', serif;
             font-style: normal;
@@ -238,15 +241,15 @@
         }
         
         .card {
-            width: 36px;
-            height: 52px;
+            width: clamp(32px, 8vw, 36px);
+            height: clamp(46px, 12vw, 52px);
             background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
             border: 2px solid #d4af37;
             border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: clamp(0.6rem, 1.5vw, 0.7rem);
             line-height: 1;
             font-weight: bold;
             box-shadow: 0 3px 6px rgba(0,0,0,0.5);
@@ -364,11 +367,11 @@
             background: linear-gradient(135deg, #d4af37 0%, #8a6e2f 100%);
             color: #1a0b2e;
             border: none;
-            padding: 15px 40px;
+            padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 40px);
             border-radius: 12px;
             cursor: pointer;
             font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: bold;
             text-transform: uppercase;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -734,6 +737,54 @@
             100% {
                 transform: translate(-50%, -50%) scale(0.8);
                 opacity: 0;
+            }
+        }
+
+        /* Media Queries para diferentes tamaños */
+        @media (max-width: 480px) {
+            .bj-card {
+                width: 98%;
+                padding: 15px 10px;
+                min-height: 550px;
+            }
+            
+            .hand-section {
+                height: auto;
+                min-height: 70px;
+            }
+            
+            .button-group {
+                gap: 5px;
+            }
+            
+            .points-label, .deck-info-item {
+                font-size: 0.65rem;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .bj-card {
+                padding: 15px 20px;
+                min-height: auto;
+            }
+            
+            .bj-title {
+                margin-top: 20px;
+                margin-bottom: 5px;
+            }
+            
+            .progress-section, .points-container {
+                margin-bottom: 5px;
+            }
+            
+            .hand-section {
+                height: 75px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .bj-card {
+                max-width: 500px;
             }
         }
     </style>
