@@ -133,12 +133,12 @@
     
     <div id="setupScreen" class="card">
         <div id="fireOverlay"></div><div class="card-corners-extra"></div>
-        <div class="setup-title">⚜ ROLL MEMBERS ⚜</div>
+        <div class="setup-title" style="display: flex; align-items: center; justify-content: center; gap: clamp(5px, 2vw, 10px); width: 90%;"><span style="font-size: clamp(1rem, 4vw, 1.4rem);">⚜</span><span>ROLL MEMBERS</span><span style="font-size: clamp(1rem, 4vw, 1.4rem);">⚜</span></div>
         
         <!-- Selector de modo -->
-        <div style="display: flex; gap: 10px; margin-bottom: 15px; width: 100%;">
-            <button class="btn" id="btnManualMode" onclick="switchMode('manual')" style="flex: 1; padding: 8px;">Manual List</button>
-            <button class="btn" id="btnAllianceMode" onclick="switchMode('alliance')" style="flex: 1; padding: 8px; background: #444;">Alliance Members</button>
+        <div style="display: flex; gap: 8px; margin-bottom: 15px; width: 100%;">
+            <button class="btn" id="btnManualMode" onclick="switchMode('manual')" style="flex: 1; padding: 10px 8px; font-size: clamp(0.8rem, 3.5vw, 1rem); height: auto; max-width: none; white-space: normal; line-height: 1.2;">Manual List</button>
+            <button class="btn" id="btnAllianceMode" onclick="switchMode('alliance')" style="flex: 1; padding: 10px 8px; background: #444; font-size: clamp(0.8rem, 3.5vw, 1rem); height: auto; max-width: none; white-space: normal; line-height: 1.2;">Alliance Members</button>
         </div>
         
         <!-- Manual input -->
