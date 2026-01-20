@@ -101,7 +101,25 @@
     <div id="setupScreen" class="card">
         <div id="fireOverlay"></div><div class="card-corners-extra"></div>
         <div class="setup-title">⚜ ROLL MEMBERS ⚜</div>
+        
+        <!-- Selector de modo -->
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; width: 100%;">
+            <button class="btn" id="btnManualMode" onclick="switchMode('manual')" style="flex: 1; padding: 8px;">Manual List</button>
+            <button class="btn" id="btnAllianceMode" onclick="switchMode('alliance')" style="flex: 1; padding: 8px; background: #444;">Alliance Members</button>
+        </div>
+        
+        <!-- Manual input -->
         <textarea id="inputNames" placeholder="Paste your list here..."></textarea>
+        
+        <!-- Alliance members checkboxes -->
+        <div id="allianceMembers" style="display: none; width: 100%; flex-grow: 1; overflow-y: auto; background: rgba(10, 5, 15, 0.6); border: 2px solid #8a6e2f; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #8a6e2f;">
+                <button onclick="selectAllMembers(true)" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">Select All</button>
+                <button onclick="selectAllMembers(false)" style="background: none; border: 1px solid #d4af37; color: #d4af37; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">Deselect All</button>
+            </div>
+            <div id="membersList"></div>
+        </div>
+        
         <div class="controls-container"><button class="btn" onclick="animarYCambiar('forward')">START</button></div>
     </div>
     <div id="lotteryCard" class="card">
@@ -118,11 +136,64 @@
         </div>
     </div>
     <script>
+        // Alliance members predefinidos
+        const allianceMembers = [
+            "Nɛfɛrէăɾîღ", "Kiera", "Astraea", "Czarina K", "Cinder",
+            "꧁༺Ger~wιη༻꧂", "༄ bคstetFนrץ° ࿐", "Calliope", "Kakia",
+            "࿐Scarletbird", "Эш", "々ʀᴀɢɴᴀʀᴏᴋचोर", "Queen VK", "LιLιтн",
+            "Betty boo", "Meeza", "εïз Flσяα ʚ ɞ", "ʚɞCłøvərⳊ", "Ing",
+            "°Valkyrie°", "꧁aphroditε꧂", "Ilion", "Rσнαɴ彡", "Moon"
+        ];
+        
+        let currentMode = 'manual'; // 'manual' o 'alliance'
         let lista = [];
         const fantasyEmojis = ["⚔️", "🛡️", "🔮", "👑", "🐉", "⚜️", "🏰", "📜", "🍷", "💍", "🦄", "🔥", "🦅", "🗡️", "🏹", "🪓", "🩸", "⛓️", "🗝️", "🌑", "🧙‍♂️", "🧙‍♀️", "🧚", "🧞", "🧝", "🧛", "🧟", "🧟‍♀️", "🧜", "👺", "👹", "🐺", "🦁", "🐎", "🦇", "🦉", "🕷️", "🦂", "🐍", "🐊", "☠️", "💀", "⚰️", "🏺", "🧿", "🕯️", "☄️", "⚡", "🌟", "🌙"];
         
         const setupScreen = document.getElementById('setupScreen'), lotteryCard = document.getElementById('lotteryCard'), fireOverlay = document.getElementById('fireOverlay'), inputNames = document.getElementById('inputNames'), slotTop = document.getElementById('slot-top'), slotMid = document.getElementById('slot-mid'), slotBot = document.getElementById('slot-bot'), btn = document.getElementById('btnRoll'), btnBack = document.getElementById('btnBack');
         let isRolling = false;
+
+        // Inicializar lista de alliance members
+        function initAllianceMembers() {
+            const membersList = document.getElementById('membersList');
+            membersList.innerHTML = allianceMembers.map((member, index) => `
+                <label style="display: flex; align-items: center; padding: 8px; margin: 4px 0; background: rgba(212, 175, 55, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(212, 175, 55, 0.2)'" onmouseout="this.style.background='rgba(212, 175, 55, 0.1)'">
+                    <input type="checkbox" id="member_${index}" value="${member}" checked style="margin-right: 10px; width: 18px; height: 18px; cursor: pointer;">
+                    <span style="color: #fff; font-family: 'Playfair Display', serif; font-size: 1rem;">${member}</span>
+                </label>
+            `).join('');
+        }
+        
+        // Cambiar modo
+        function switchMode(mode) {
+            currentMode = mode;
+            const btnManual = document.getElementById('btnManualMode');
+            const btnAlliance = document.getElementById('btnAllianceMode');
+            const inputArea = document.getElementById('inputNames');
+            const allianceArea = document.getElementById('allianceMembers');
+            
+            if (mode === 'manual') {
+                btnManual.style.background = 'linear-gradient(180deg, #d4af37 0%, #96732b 100%)';
+                btnAlliance.style.background = '#444';
+                inputArea.style.display = 'block';
+                allianceArea.style.display = 'none';
+            } else {
+                btnManual.style.background = '#444';
+                btnAlliance.style.background = 'linear-gradient(180deg, #d4af37 0%, #96732b 100%)';
+                inputArea.style.display = 'none';
+                allianceArea.style.display = 'block';
+            }
+        }
+        
+        // Seleccionar/deseleccionar todos
+        function selectAllMembers(select) {
+            const checkboxes = document.querySelectorAll('#membersList input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = select);
+        }
+        
+        // Inicializar al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            initAllianceMembers();
+        });
 
         // === MOTOR DE AUDIO (Web Audio API) ===
         // Esto crea el sistema de audio. Empieza "suspendido" por reglas del navegador.
@@ -220,12 +291,23 @@
         function animarYCambiar(d) { 
             if (isRolling) return; // Bloqueo si esta girando
 
-            // Validacion de campo vacio
-            if (d === 'forward' && !inputNames.value.trim()) { 
-                inputNames.style.borderColor = "#ff0000"; 
-                setTimeout(() => inputNames.style.borderColor = "#8a6e2f", 500); 
-                return; 
-            } 
+            // Validacion segun modo
+            if (d === 'forward') {
+                if (currentMode === 'manual') {
+                    if (!inputNames.value.trim()) { 
+                        inputNames.style.borderColor = "#ff0000"; 
+                        setTimeout(() => inputNames.style.borderColor = "#8a6e2f", 500); 
+                        return; 
+                    }
+                } else {
+                    // Modo alliance: verificar que al menos un checkbox esté marcado
+                    const checkedBoxes = document.querySelectorAll('#membersList input[type="checkbox"]:checked');
+                    if (checkedBoxes.length === 0) {
+                        alert('Please select at least one member!');
+                        return;
+                    }
+                }
+            }
             
             playFireSound(); // Reproducir sonido fuego
             
@@ -246,7 +328,17 @@
 
         // Preparar lista de nombres
         function ejecutarStart() { 
-            const l = inputNames.value.trim().split('\n').map(x => x.trim()).filter(x => x.length > 0); 
+            let l = [];
+            
+            if (currentMode === 'manual') {
+                // Modo manual: usar textarea
+                l = inputNames.value.trim().split('\n').map(x => x.trim()).filter(x => x.length > 0);
+            } else {
+                // Modo alliance: usar checkboxes seleccionados
+                const checkedBoxes = document.querySelectorAll('#membersList input[type="checkbox"]:checked');
+                l = Array.from(checkedBoxes).map(cb => cb.value);
+            }
+            
             let ed = [...fantasyEmojis]; 
             // Asignar emojis sin repetir hasta agotar mazo
             const getEm = () => { if (ed.length === 0) ed = [...fantasyEmojis]; return ed.splice(Math.floor(Math.random() * ed.length), 1)[0]; }; 
