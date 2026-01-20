@@ -7,22 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
+        /* === SISTEMA BASE FIJO === */
         body { 
             margin: 0; height: 100vh; 
             background: radial-gradient(circle at center, #3a1c52 0%, #1a0b2e 60%, #05020a 100%); 
             display: flex; justify-content: center; align-items: center; 
             font-family: 'Cinzel', serif; overflow: hidden; color: #d4af37;
-            padding: 6px;
+            padding: 10px;
         }
 
+        /* Contenedor principal - FIJO BASE */
         .slot-card { 
             position: relative; 
-            width: 100%; 
-            max-width: 450px; 
+            width: 450px; 
+            max-width: calc(100vw - 20px);
             height: auto;
-            min-height: 500px;
-            max-height: calc(100vh - 12px);
-            padding: 12px 10px;
+            min-height: 550px;
+            max-height: calc(100vh - 20px);
+            padding: 20px;
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -30,21 +32,23 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            transition: transform 0.3s ease;
         }
 
         .slot-card::before, .slot-card::after { content: ''; position: absolute; width: 15px; height: 15px; border: 3px solid #d4af37; pointer-events: none; z-index: 20; }
         .slot-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; } 
         .slot-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
+        /* Título - VALOR FIJO */
         .slot-title { 
-            font-size: 1.1rem; 
+            font-size: 1.2rem; 
             color: #ffd700; 
             text-transform: uppercase; 
             letter-spacing: 1.5px; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
-            margin-bottom: 10px;
-            margin-top: 35px;
-            padding: 0 55px;
+            margin-bottom: 15px;
+            margin-top: 40px;
+            padding: 0;
         }
 
         .slot-reels { 
@@ -321,33 +325,38 @@
         }
         
         /* Level Display */
+        /* Top Controls - VALORES FIJOS */
         .level-display {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            left: 10px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
-            border-radius: 8px;
-            padding: 8px 15px;
-            font-size: 0.9rem;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
             color: #ffd700;
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             z-index: 10;
+            max-width: 35%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* Back Button */
         .back-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 8px;
-            padding: 8px 15px;
+            padding: 7px 12px;
             cursor: pointer;
             color: #d4af37;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             transition: all 0.2s;
             z-index: 10;
@@ -365,11 +374,11 @@
         /* Info Button */
         .info-btn {
             position: absolute;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 50%;
@@ -378,7 +387,7 @@
             justify-content: center;
             cursor: pointer;
             color: #ffd700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             font-family: 'Cinzel', serif;
             font-style: normal;
@@ -481,79 +490,46 @@
             transform: scale(1.05);
         }
         
-        /* Media Queries - Base ya es mobile-first */
+        /* === MEDIA QUERIES - SISTEMA DE ESCALADO TRANSFORM === */
+        
+        /* Pantallas pequeñas - reducir con transform */
+        @media (max-width: 400px) {
+            .slot-card {
+                transform: scale(0.92);
+            }
+        }
+        
         @media (max-width: 360px) {
-            .slot-title {
-                font-size: 1rem;
-                padding: 0 45px;
-            }
-            
-            .reel {
-                width: 56px;
-                height: 56px;
-                font-size: 1.8rem;
-            }
-            
-            .spin-btn {
-                font-size: 0.85rem;
-                padding: 10px 20px;
+            .slot-card {
+                transform: scale(0.85);
             }
         }
         
         /* Pantallas cortas en altura */
         @media (max-height: 650px) {
             .slot-card {
-                min-height: 480px;
-            }
-            
-            .slot-title {
-                margin-top: 28px;
-                margin-bottom: 8px;
-            }
-            
-            .slot-reels {
-                margin-bottom: 10px;
-            }
-            
-            .reel {
-                width: 58px;
-                height: 58px;
+                min-height: 500px;
+                transform: scale(0.9);
             }
         }
         
-        /* Tablets y escritorio */
-        @media (min-width: 768px) {
-            body { padding: 10px; }
+        @media (max-height: 550px) {
             .slot-card {
-                max-width: 480px;
-                padding: 25px 20px;
+                min-height: 450px;
+                transform: scale(0.8);
             }
-            
-            .slot-title {
-                font-size: 1.3rem;
-                margin-top: 40px;
+        }
+        
+        /* Tablets y escritorio - escalar hacia arriba */
+        @media (min-width: 768px) {
+            .slot-card {
+                transform: scale(1.05);
             }
-            
-            .reel {
-                width: 75px;
-                height: 75px;
-                font-size: 2.4rem;
-            }
-            
-            .spin-btn {
-                font-size: 1.05rem;
-                padding: 14px 35px;
-            }
-            
-            .level-display, .back-btn {
-                font-size: 0.75rem;
-                padding: 5px 10px;
-            }
-            
-            .info-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 0.9rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .slot-card {
+                transform: scale(1.1);
             }
         }
     </style>

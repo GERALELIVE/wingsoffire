@@ -7,22 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
+        /* === SISTEMA BASE FIJO === */
         body { 
             margin: 0; height: 100vh; 
             background: radial-gradient(circle at center, #3a1c52 0%, #1a0b2e 60%, #05020a 100%); 
             display: flex; justify-content: center; align-items: center; 
             font-family: 'Cinzel', serif; overflow: hidden; color: #d4af37;
-            padding: 6px;
+            padding: 10px;
         }
 
+        /* Contenedor principal - FIJO BASE */
         .bj-card { 
             position: relative; 
-            width: 100%; 
-            max-width: 450px; 
+            width: 450px; 
+            max-width: calc(100vw - 20px);
             height: auto;
-            min-height: 500px;
-            max-height: calc(100vh - 12px);
-            padding: 12px 10px;
+            min-height: 550px;
+            max-height: calc(100vh - 20px);
+            padding: 20px;
             background: linear-gradient(180deg, rgba(30, 15, 40, 0.95) 0%, rgba(10, 5, 20, 0.98) 100%); 
             border: 3px solid #d4af37; border-radius: 20px; text-align: center; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 40px rgba(0,0,0,0.8); 
@@ -30,6 +32,7 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            transition: transform 0.3s ease;
         }
 
         .bj-card::before, .bj-card::after { 
@@ -39,28 +42,29 @@
         .bj-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; } 
         .bj-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
+        /* Título - VALOR FIJO */
         .bj-title { 
-            font-size: 1.1rem; 
+            font-size: 1.2rem; 
             color: #ffd700; 
             text-transform: uppercase; 
             letter-spacing: 1.5px; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
-            margin-bottom: 8px;
-            margin-top: 35px;
+            margin-bottom: 15px;
+            margin-top: 40px;
             flex-shrink: 0;
-            padding: 0 55px;
+            padding: 0;
         }
 
-        /* Top Controls */
+        /* Top Controls - VALORES FIJOS */
         .level-display {
             position: absolute;
-            top: clamp(8px, 2.5vw, 15px);
-            left: clamp(8px, 2.5vw, 15px);
+            top: 10px;
+            left: 10px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 6px;
-            padding: clamp(4px, 1.2vw, 7px) clamp(6px, 2vw, 12px);
-            font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+            padding: 6px 10px;
+            font-size: 0.8rem;
             color: #ffd700;
             font-weight: bold;
             letter-spacing: 0.5px;
@@ -73,15 +77,15 @@
         
         .back-btn {
             position: absolute;
-            top: clamp(10px, 3vw, 20px);
-            right: clamp(10px, 3vw, 20px);
+            top: 15px;
+            right: 15px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 8px;
-            padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
+            padding: 7px 12px;
             cursor: pointer;
             color: #d4af37;
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            font-size: 0.85rem;
             font-weight: bold;
             transition: all 0.2s;
             z-index: 10;
@@ -98,11 +102,11 @@
         
         .info-btn {
             position: absolute;
-            top: clamp(10px, 3vw, 20px);
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: clamp(30px, 8vw, 35px);
-            height: clamp(30px, 8vw, 35px);
+            width: 32px;
+            height: 32px;
             background: rgba(0, 0, 0, 0.7);
             border: 2px solid #d4af37;
             border-radius: 50%;
@@ -111,7 +115,7 @@
             justify-content: center;
             cursor: pointer;
             color: #ffd700;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-size: 1rem;
             font-weight: bold;
             font-family: 'Cinzel', serif;
             font-style: normal;
@@ -143,8 +147,8 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            gap: clamp(3px, 1.5vw, 5px);
-            min-height: clamp(50px, 12vw, 60px);
+            gap: 5px;
+            min-height: 55px;
             flex-wrap: wrap;
         }
         
@@ -248,15 +252,15 @@
         }
         
         .card {
-            width: clamp(32px, 8vw, 36px);
-            height: clamp(46px, 12vw, 52px);
+            width: 34px;
+            height: 50px;
             background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
             border: 2px solid #d4af37;
             border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+            font-size: 0.65rem;
             line-height: 1;
             font-weight: bold;
             box-shadow: 0 3px 6px rgba(0,0,0,0.5);
@@ -748,77 +752,51 @@
             }
         }
 
-        /* Media Queries - Base ya es mobile-first */
+        /* === MEDIA QUERIES - SISTEMA DE ESCALADO TRANSFORM === */
+        
+        /* Pantallas pequeñas - reducir con transform */
+        @media (max-width: 400px) {
+            .bj-card {
+                transform: scale(0.92);
+            }
+        }
+        
         @media (max-width: 360px) {
-            .bj-title {
-                font-size: 1rem;
-                padding: 0 45px;
-            }
-            
-            .card {
-                width: 28px;
-                height: 40px;
-                font-size: 0.55rem;
-            }
-            
-            .bj-btn {
-                font-size: 0.75rem;
-                padding: 8px 12px;
+            .bj-card {
+                transform: scale(0.85);
             }
         }
         
         /* Pantallas cortas en altura */
         @media (max-height: 650px) {
             .bj-card {
-                min-height: 480px;
-            }
-            
-            .bj-title {
-                margin-top: 28px;
-                margin-bottom: 6px;
-            }
-            
-            .game-area {
-                gap: 5px;
-                min-height: 75px;
-            }
-            
-            .hand-section {
-                min-height: 55px;
+                min-height: 500px;
+                transform: scale(0.9);
             }
         }
         
-        /* Tablets y escritorio */
-        @media (min-width: 768px) {
-            body { padding: 10px; }
+        @media (max-height: 550px) {
             .bj-card {
-                max-width: 480px;
-                padding: 25px 20px;
+                min-height: 450px;
+                transform: scale(0.8);
             }
-            
-            .bj-title {
-                font-size: 1.3rem;
-                margin-top: 40px;
+        }
+        
+        /* Tablets y escritorio - escalar hacia arriba */
+        @media (min-width: 768px) {
+            .bj-card {
+                transform: scale(1.05);
             }
-            
-            .card {
-                width: 38px;
-                height: 55px;
-                font-size: 0.75rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .bj-card {
+                transform: scale(1.1);
             }
-            
-            .bj-btn {
-                font-size: 1rem;
-                padding: 14px 30px;
-            }
-            
-            .level-display, .back-btn {
-                font-size: 0.75rem;
-                padding: 5px 10px;
-            }
-            
-            .info-btn {
-                width: 30px;
+        }
+    </style>
+</head>
+<body>
                 height: 30px;
                 font-size: 0.9rem;
             }
