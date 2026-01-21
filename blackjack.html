@@ -1294,9 +1294,11 @@
             if (data) {
                 gameState.deckCount = `${data.deck_remaining || 0}/${data.deck_total || 0}`;
                 gameState.penetration = data.penetration || '0%';
-                document.getElementById('deckCount').textContent = gameState.deckCount;
-                document.getElementById('penetration').textContent = gameState.penetration;
             }
+            
+            // Always update display from gameState
+            document.getElementById('deckCount').textContent = gameState.deckCount;
+            document.getElementById('penetration').textContent = gameState.penetration;
         }
         
         function updateMessage(big, small) {
@@ -1402,6 +1404,10 @@
                       
                       // Hide modal
                       document.getElementById('resetModal').style.display = 'none';
+                      
+                      // Update deck display immediately
+                      document.getElementById('deckCount').textContent = gameState.deckCount;
+                      document.getElementById('penetration').textContent = gameState.penetration;
                       
                       // Reset UI completely
                       updateDisplay();
