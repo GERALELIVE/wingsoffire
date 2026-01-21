@@ -817,6 +817,7 @@
                     }
                 }
                 const container = document.getElementById('autoRollContainer');
+                container.style.display = 'none';
                 container.classList.remove('unlocked');
                 const btn = document.getElementById('autoRollBtn');
                 btn.classList.remove('active');
@@ -857,8 +858,9 @@
                 updateDisplay();
                 updateLevelDisplay();
                 
-                // Reset auto-roll button
+                // Hide and reset auto-roll button completely
                 const container = document.getElementById('autoRollContainer');
+                container.style.display = 'none';
                 container.classList.remove('unlocked');
                 const btn = document.getElementById('autoRollBtn');
                 btn.classList.remove('active');
@@ -960,9 +962,13 @@
                 updateDisplay();
                 updateLevelDisplay();
                 
-                // Reset auto-roll UI
+                // Hide and reset auto-roll UI
                 const container = document.getElementById('autoRollContainer');
+                container.style.display = 'none';
                 container.classList.remove('unlocked');
+                const autoBtn = document.getElementById('autoRollBtn');
+                autoBtn.classList.remove('active');
+                autoBtn.innerHTML = '▶️ AUTO-ROLL';
                 
                 result.textContent = 'Ready to try again!';
                 result.style.color = '#ffd700';
@@ -1039,10 +1045,20 @@
                 clearTimeout(autoRollInterval);
                 autoRollInterval = null;
             }
+            
+            // Reset and hide auto-roll completely
+            const autoRollContainer = document.getElementById('autoRollContainer');
+            autoRollContainer.style.display = 'none';
+            autoRollContainer.classList.remove('unlocked');
+            const autoBtn = document.getElementById('autoRollBtn');
+            autoBtn.classList.remove('active');
+            autoBtn.innerHTML = '▶️ AUTO-ROLL';
+            
             symbolWeights = getSymbolWeights();
             totalWeight = symbolWeights.reduce((sum, s) => sum + s.weight, 0);
             points = INITIAL_CREDITS;
             localStorage.setItem('slotPoints', points);
+            localStorage.setItem('slotSpins', 0);
             updateDisplay();
             updateLevelDisplay();
             document.getElementById('result').textContent = '';
