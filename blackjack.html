@@ -1079,6 +1079,25 @@
         
         async function initGame() {
             loadGameState();
+            
+            // Initialize deck count from backend if no game in progress
+            if (!gameState.gameInProgress) {
+                try {
+                    const resp = await fetch(`${API}/api/blackjack/init`, { 
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const data = await resp.json();
+                    if (data.success) {
+                        gameState.deckCount = `${data.deck_remaining || 0}/${data.deck_total || 0}`;
+                        gameState.penetration = data.penetration || '0%';
+                        saveGameState();
+                    }
+                } catch (error) {
+                    console.error('Error initializing deck:', error);
+                }
+            }
+            
             updateDisplay();
             if (!gameState.gameInProgress) {
                 document.getElementById('newHandBtn').style.display = 'flex';
