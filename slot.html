@@ -642,8 +642,8 @@
             const autoRollContainer = document.getElementById('autoRollContainer');
             const levelUpBtn = document.getElementById('levelUpBtn');
             
-            // Hide auto-roll button
-            autoRollContainer.style.display = 'none';
+            // Hide auto-roll button (keep space with visibility)
+            autoRollContainer.style.visibility = 'hidden';
             
             // Show level up button
             levelUpBtn.style.display = 'flex';
@@ -653,8 +653,10 @@
             const autoRollContainer = document.getElementById('autoRollContainer');
             const levelUpBtn = document.getElementById('levelUpBtn');
             
-            // Show auto-roll button again
-            autoRollContainer.style.display = 'flex';
+            // Show auto-roll button again (only if was unlocked)
+            if (autoRollContainer.classList.contains('unlocked')) {
+                autoRollContainer.style.visibility = 'visible';
+            }
             
             // Hide level up button
             levelUpBtn.style.display = 'none';
@@ -671,6 +673,7 @@
             const container = document.getElementById('autoRollContainer');
             if (spinsInLevel >= AUTO_ROLL_UNLOCK_SPINS && !container.classList.contains('unlocked')) {
                 container.classList.add('unlocked');
+                container.style.visibility = 'visible'; // Ensure it's visible when unlocked
                 const result = document.getElementById('result');
                 const prevText = result.textContent;
                 result.textContent = '⚡ AUTO-ROLL UNLOCKED! ⚡';
@@ -817,8 +820,8 @@
                     }
                 }
                 const container = document.getElementById('autoRollContainer');
-                container.style.display = 'none';
                 container.classList.remove('unlocked');
+                container.style.visibility = 'visible';
                 const btn = document.getElementById('autoRollBtn');
                 btn.classList.remove('active');
                 btn.innerHTML = '▶️ AUTO-ROLL';
@@ -858,10 +861,10 @@
                 updateDisplay();
                 updateLevelDisplay();
                 
-                // Hide and reset auto-roll button completely
+                // Reset auto-roll button (keep space occupied)
                 const container = document.getElementById('autoRollContainer');
-                container.style.display = 'none';
                 container.classList.remove('unlocked');
+                container.style.visibility = 'visible';
                 const btn = document.getElementById('autoRollBtn');
                 btn.classList.remove('active');
                 btn.innerHTML = '▶️ AUTO-ROLL';
@@ -962,10 +965,10 @@
                 updateDisplay();
                 updateLevelDisplay();
                 
-                // Hide and reset auto-roll UI
+                // Reset auto-roll UI (keep space occupied)
                 const container = document.getElementById('autoRollContainer');
-                container.style.display = 'none';
                 container.classList.remove('unlocked');
+                container.style.visibility = 'visible';
                 const autoBtn = document.getElementById('autoRollBtn');
                 autoBtn.classList.remove('active');
                 autoBtn.innerHTML = '▶️ AUTO-ROLL';
@@ -1046,10 +1049,10 @@
                 autoRollInterval = null;
             }
             
-            // Reset and hide auto-roll completely
+            // Reset auto-roll (keep space occupied)
             const autoRollContainer = document.getElementById('autoRollContainer');
-            autoRollContainer.style.display = 'none';
             autoRollContainer.classList.remove('unlocked');
+            autoRollContainer.style.visibility = 'visible';
             const autoBtn = document.getElementById('autoRollBtn');
             autoBtn.classList.remove('active');
             autoBtn.innerHTML = '▶️ AUTO-ROLL';
