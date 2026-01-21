@@ -12,6 +12,7 @@
             background: radial-gradient(circle at center, #3a1c52 0%, #1a0b2e 60%, #05020a 100%); 
             display: flex; justify-content: center; align-items: center; 
             font-family: 'Cinzel', serif; overflow: hidden; color: #d4af37; 
+            transform: scale(0.9);
         }
 
         .bj-card { 
@@ -1292,6 +1293,8 @@
         
         function openInfoModal() {
             updateModalLevelInfo();
+            // Push a history state so back button closes modal
+            window.history.pushState({ modalOpen: true }, '');
             document.getElementById('infoModal').classList.add('show');
         }
         
@@ -1346,7 +1349,11 @@
         }
         
         function closeInfoModal() {
-            document.getElementById('infoModal').classList.remove('show');
+            const modalElement = document.getElementById('infoModal');
+            // Only close if modal is actually open
+            if (modalElement.classList.contains('show')) {
+                modalElement.classList.remove('show');
+            }
         }
         
         function resetGame() {
@@ -1404,6 +1411,14 @@
                     newHandBtn.style.display = 'flex';
                 }
             }, 500);
+        });
+        
+        // === BACK BUTTON HANDLING ===
+        window.addEventListener('popstate', (event) => {
+            const infoModal = document.getElementById('infoModal');
+            if (infoModal && infoModal.classList.contains('show')) {
+                closeInfoModal();
+            }
         });
     </script>
 </body>

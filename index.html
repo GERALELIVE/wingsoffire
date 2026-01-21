@@ -14,6 +14,7 @@
             display: flex; justify-content: center; align-items: center; 
             font-family: 'Cinzel', serif; overflow: hidden; user-select: none; color: #d4af37; 
             overscroll-behavior: none; 
+            transform: scale(0.9);
         }
 
         /* Tarjeta principal */
@@ -644,7 +645,8 @@
         // === ADMIN FUNCTIONS ===
         
         function openAdminModal() {
-            window.history.replaceState(null, '', 'index.html#edit');
+            // Push a history state so back button closes modal
+            window.history.pushState({ modalOpen: true }, '');
             document.getElementById('adminModal').classList.add('show');
             document.getElementById('adminPasswordSection').style.display = 'block';
             document.getElementById('adminInterface').style.display = 'none';
@@ -654,17 +656,13 @@
         
         function closeAdminModal() {
             const wasAuthenticated = document.getElementById('adminInterface').style.display === 'block';
-            document.getElementById('adminModal').classList.remove('show');
+            const modalElement = document.getElementById('adminModal');
             
-            if (wasAuthenticated) {
-                // Si estaba viendo la interfaz de admin, volver a alliance
-                window.history.replaceState(null, '', 'index.html#alliance');
-            } else {
-                // Si solo estaba en la pantalla de password, volver a alliance también
-                window.history.replaceState(null, '', 'index.html#alliance');
+            // Only close if modal is actually open
+            if (modalElement.classList.contains('show')) {
+                modalElement.classList.remove('show');
+                adminSessionId = null;
             }
-            
-            adminSessionId = null;
         }
         
         async function verifyAdminPassword() {
@@ -1094,6 +1092,14 @@
                 el.style.fontSize = fs + "rem"; 
             } 
         }
+        
+        // === BACK BUTTON HANDLING ===
+        window.addEventListener('popstate', (event) => {
+            const adminModal = document.getElementById('adminModal');
+            if (adminModal && adminModal.classList.contains('show')) {
+                closeAdminModal();
+            }
+        });
     </script>
 </body>
 </html>
