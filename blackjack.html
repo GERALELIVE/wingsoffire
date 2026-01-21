@@ -1367,6 +1367,19 @@
             gameState.points = 0;
             saveStats();
             
+            // Reset backend session and deck
+            fetch(`${API}/api/blackjack/init`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      console.log('Backend session and deck reset successfully');
+                  }
+              }).catch(error => {
+                  console.error('Error resetting backend session:', error);
+              });
+            
             // Hide modal
             document.getElementById('resetModal').style.display = 'none';
             
