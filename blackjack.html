@@ -1381,44 +1381,58 @@
         }
         
         function confirmReset() {
-            // Clear game state
-            gameState.level = 1;
-            gameState.points = 0;
-            saveStats();
-            
-            // Reset backend session and deck
+            // Reset backend session and deck first
             fetch(`${API}/api/blackjack/init`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             }).then(response => response.json())
               .then(data => {
                   if (data.success) {
+                      // Update deck count from backend
+                      gameState.deckCount = `${data.deck_remaining || 52}/${data.deck_total || 52}`;
+                      gameState.penetration = data.penetration || '25%';
                       console.log('Backend session and deck reset successfully');
+                      
+                      // Now reset local state
+                      gameState.level = 1;
+                      gameState.points = 0;
+                      gameState.gameInProgress = false;
+                      gameState.buttonState = 'initial';
+                      saveGameState();
+                      
+                      // Hide modal
+                      document.getElementById('resetModal').style.display = 'none';
+                      
+                      // Reset UI completely
+                      updateDisplay();
+                      updateMessage('GAME RESET', 'Press "NEW HAND" to start');
+                      
+                      // Clear cards display
+                      document.getElementById('playerCards').innerHTML = '-';
+                      document.getElementById('dealerCards').innerHTML = '-';
+                      document.getElementById('playerValue').innerHTML = '-';
+                      document.getElementById('dealerValue').innerHTML = '-';
+                      
+                      // Reset buttons to initial state
+                      document.getElementById('newHandBtn').style.display = 'flex';
+                      document.getElementById('hitBtn').style.display = 'none';
+                      document.getElementById('standBtn').style.display = 'none';
+                      document.getElementById('hitBtn').disabled = true;
+                      document.getElementById('standBtn').disabled = true;
                   }
               }).catch(error => {
                   console.error('Error resetting backend session:', error);
+                  // Still reset frontend even if backend fails
+                  gameState.level = 1;
+                  gameState.points = 0;
+                  gameState.gameInProgress = false;
+                  gameState.deckCount = '52/52';
+                  gameState.penetration = '25%';
+                  saveGameState();
+                  document.getElementById('resetModal').style.display = 'none';
+                  updateDisplay();
               });
-            
-            // Hide modal
-            document.getElementById('resetModal').style.display = 'none';
-            
-            // Reset UI completely
-            updateDisplay();
-            updateMessage('GAME RESET', 'Press "NEW HAND" to start');
-            
-            // Clear cards display
-            document.getElementById('playerCards').innerHTML = '-';
-            document.getElementById('dealerCards').innerHTML = '-';
-            document.getElementById('playerValue').innerHTML = '-';
-            // document.getElementById('pointsDisplay').textContent = '0';
-            document.getElementById('dealerValue').innerHTML = '-';
-            
-            // Reset buttons to initial state
-            document.getElementById('newHandBtn').style.display = 'flex';
-            document.getElementById('hitBtn').style.display = 'none';
-            document.getElementById('standBtn').style.display = 'none';
-            document.getElementById('hitBtn').disabled = true;
-            document.getElementById('standBtn').disabled = true;
+        }
             
             // Clear victory overlay if shown
             document.getElementById('victoryOverlay').style.display = 'none';
