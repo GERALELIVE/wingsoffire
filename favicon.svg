@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 450">
+  <defs>
+    <linearGradient id="dragonFire" x1="10%" y1="90%" x2="90%" y2="10%">
+      <stop offset="0%" stop-color="#b30000" />
+      <stop offset="40%" stop-color="#e63e23" />
+      <stop offset="70%" stop-color="#f78c1e" />
+      <stop offset="100%" stop-color="#f9ca24" />
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#f9ca24" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(40, 50) scale(0.85)">
+    <path fill="url(#dragonFire)" stroke="#f7d317" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" d="M 100 420 C 130 250, 250 120, 480 20 L 440 140 Q 360 190, 300 250 L 380 290 Q 300 330, 240 360 L 300 400 Q 220 400, 150 420 Z"/>
+    <path fill="url(#shine)" d="M 110 410 C 145 255, 260 135, 470 35 L 475 45 C 280 160, 170 280, 140 415 Z" opacity="0.8" style="mix-blend-mode: screen;"/>
+    <path fill="none" stroke="#f9ca24" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round" d="M 270 160 Q 310 240, 380 290"/>
+    <path fill="none" stroke="#f9ca24" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round" d="M 230 210 Q 250 310, 300 400"/>
+  </g>
+</svg>
